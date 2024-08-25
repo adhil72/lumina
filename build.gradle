@@ -1,0 +1,35 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.0.0'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'application'
+
+}
+
+group = 'gecw.ace'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    implementation 'com.google.code.gson:gson:2.8.9'
+}
+
+javafx {
+    version = '20'
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ,'javafx.web']
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'gecw.ace.MainKt'
+}
+
+kotlin {
+    jvmToolchain(18)
+}

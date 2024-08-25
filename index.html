@@ -1,0 +1,42 @@
+<html class="" style="">
+<head class="" style=""><title class="" style="">Hello World!</title>
+    <meta class="" charset="UTF-8" style=""></meta>
+    <meta class="" name="viewport" content="width=device-width, initial-scale=1.0" style=""></meta>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0"/>
+    <style class="" style="">* {
+        font-family: 'Roboto', sans-serif;
+    }</style>
+</head>
+<body class="" style="padding:0px; margin:0px;">
+<script>function sendMessageToJava() {
+    let javaConnector = window.javaConnector;
+    if (typeof javaConnector !== 'undefined') {
+        javaConnector.hi();
+    } else {
+        alert('JavaConnector not found');
+    }
+}</script>
+<div class="" style="display:flex; width:100%; justify-content:center; align-items:center; height:100vh;">
+    <div class="" style="background-color:#f2f2f2; border-radius:10px; padding:20px; width:400px;">
+        <div class="" style="width:100%;"><input class="" placeholder="Username" type="text"
+                                                 style="padding:10px; width:100%; font-size:20px;"></input><input
+                class="" placeholder="Password" type="password"
+                style="padding:10px; width:100%; font-size:20px;"></input>
+            <button class="" onclick="sendMessageToJava()"
+                    style="background-color:#007bff; border-radius:5px; padding:10px; color:#fff; width:100%; font-size:20px;">
+                Login
+            </button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
