@@ -1,9 +1,9 @@
 package gecw.ace.test
 
 import gecw.ace.lumina.ui.View
-import gecw.ace.lumina.ui.common.Div
+import lumina.ui.common.Div
 
-class Layout:Div() {
+class Layout: Div() {
     val container = Div().apply {
         cn("flex-1")
     }

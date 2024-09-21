@@ -1,8 +1,11 @@
-package gecw.ace.lumina.ui
+package lumina.ui
 
-import gecw.ace.lumina.Lumina
-import gecw.ace.lumina.utils.WebViewIPC
+import lumina.Lumina
+import lumina.utils.WebViewIPC
 import java.util.*
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
+import org.jsoup.nodes.Document
 
 open class View(val name: String, val valueVar: Boolean = false) {
     private val childs = mutableListOf<View>()
@@ -194,4 +197,41 @@ open class View(val name: String, val valueVar: Boolean = false) {
         else attributes["ondrop"] = "dropHandler('$id')"
         WebViewIPC.onDropListeners[id] = res
     }
+}
+
+class DuplicateIdException(id: String) : Exception("Duplicate ID found: $id")
+
+fun convertHtmlToView(html: String): View {
+    val document: Document = Jsoup.parse(html)
+    val idMap = mutableSetOf<String>()
+    return convertElementToView(document.body(), idMap)
+}
+
+private fun convertElementToView(element: Element, idMap: MutableSet<String>): View {
+    val view = View(element.tagName())
+    val id = element.attr("id")
+    if (id.isNotBlank()) {
+        if (idMap.contains(id)) {
+            throw DuplicateIdException(id)
+        }
+        idMap.add(id)
+        view.attr("id", id)
+    }
+    val classes = element.classNames().toTypedArray()
+    if (classes.isNotEmpty()) {
+        view.cn(*classes)
+    }
+    for (attribute in element.attributes()) {
+        if (attribute.key != "id" && attribute.key != "class") {
+            view.attr(attribute.key, attribute.value)
+        }
+    }
+    for (child in element.children()) {
+        val childView = convertElementToView(child, idMap)
+        view.addView(childView)
+    }
+    if (element.ownText().isNotBlank()) {
+        view.addView(View(element.ownText(), true))
+    }
+    return view
 }

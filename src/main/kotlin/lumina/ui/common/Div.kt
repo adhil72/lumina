@@ -1,5 +1,6 @@
-package gecw.ace.lumina.ui.common
+package lumina.ui.common
 
-import gecw.ace.lumina.ui.View
+import lumina.ui.View
+
 
 open class Div:View("div")

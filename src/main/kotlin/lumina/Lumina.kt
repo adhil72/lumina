@@ -1,8 +1,8 @@
-package gecw.ace.lumina
+package lumina
 
 import gecw.ace.lumina.ui.View
 import gecw.ace.lumina.utils.WebViewIPC
-import gecw.ace.utils.getResourceAsString
+import gecw.ace.lumina.utils.getResourceAsString
 import javafx.animation.PauseTransition
 import javafx.application.Application
 import javafx.application.Platform
@@ -70,6 +70,7 @@ open class Lumina : Application() {
         webView.engine.onAlert = EventHandler {
             println("alert : " + it.data)
         }
+
         var htmlContent = getResourceAsString("root.html")
         htmlContent = htmlContent.replace("""<script id="config.script"></script>""","""
             <script id="config.script">

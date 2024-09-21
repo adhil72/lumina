@@ -1,4 +1,4 @@
-package gecw.ace.lumina.utils
+package lumina.utils
 
 import com.google.gson.Gson
 import javafx.application.Platform

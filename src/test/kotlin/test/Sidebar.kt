@@ -1,7 +1,7 @@
 package gecw.ace.test
 
-import gecw.ace.lumina.ui.common.Div
-import gecw.ace.lumina.ui.common.Text
+import lumina.ui.common.Div
+import lumina.ui.common.Text
 
 class Sidebar(var onItemClick:(id:String)->Unit = {}) : Div() {
     init {

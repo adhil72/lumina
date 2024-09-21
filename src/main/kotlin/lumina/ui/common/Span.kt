@@ -1,7 +1,7 @@
-package gecw.ace.lumina.ui.common
+package lumina.ui.common
 
-import gecw.ace.lumina.Lumina
-import gecw.ace.lumina.ui.View
+import lumina.Lumina
+import lumina.ui.View
 
 class Span:View("span") {
     var text:String
@@ -11,6 +11,6 @@ class Span:View("span") {
         }
         set(value) {
             if (rendered) Lumina.exec("document.getElementById('$id').innerText = '$value'")
-            else addView(Text(value))
+            else addView(value)
         }
 }

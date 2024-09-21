@@ -15,11 +15,13 @@ repositories {
 dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
     implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'org.jsoup:jsoup:1.14.3'
+
 }
 
 javafx {
     version = '20'
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ,'javafx.web']
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ,'javafx.web','javafx.media']
 }
 
 test {
@@ -32,4 +34,25 @@ application {
 
 kotlin {
     jvmToolchain(18)
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = 'solid.lumina'
+            artifactId = 'slmna'
+            version = '1.0.0'
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/USERNAME/REPOSITORY")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
+            }
+        }
+    }
 }
