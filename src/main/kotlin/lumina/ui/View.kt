@@ -1,0 +1,197 @@
+package gecw.ace.lumina.ui
+
+import gecw.ace.lumina.Lumina
+import gecw.ace.lumina.utils.WebViewIPC
+import java.util.*
+
+open class View(val name: String, val valueVar: Boolean = false) {
+    private val childs = mutableListOf<View>()
+    private val attributes = mutableMapOf<String, String>()
+    private val classList = mutableListOf<String>()
+    val id = UUID.randomUUID().toString()
+    var rendered = false
+
+    fun render(): String {
+        rendered = true
+        if (valueVar) return name
+        val classes = classList.joinToString(" ")
+        val attrs = attributes.map { "${it.key}=\"${it.value}\"" }.joinToString(" ")
+        val childs = childs.joinToString("") { it.render() }
+        return "<$name id=\"$id\" class=\"$classes\" $attrs>$childs</$name>"
+    }
+
+    fun cn(vararg classes: String) {
+        if (rendered) Lumina.exec("""document.getElementById("$id").classList.add(`${classes.joinToString(" ")}`)""".trimIndent())
+        else classList.addAll(classes)
+    }
+
+    fun addView(view: View) {
+        if (rendered) Lumina.exec("""document.getElementById("$id").innerHTML += `${view.render()}` """.trimIndent())
+        else childs.add(view)
+    }
+
+    fun addView(text: String) {
+        if (rendered) Lumina.exec("""document.getElementById("$id").innerHTML += `${text}` """.trimIndent())
+        else childs.add(View(text, true))
+    }
+
+    fun setView(view: View) {
+        if (rendered) Lumina.exec("""document.getElementById("$id").innerHTML = `${view.render()}` """.trimIndent())
+        else {
+            childs.clear()
+            childs.add(view)
+        }
+    }
+
+    fun removeView() {
+        try {
+            if (rendered) Lumina.exec("""document.getElementById("$id").remove()""".trimIndent())
+        }catch (_:Exception){}
+    }
+
+    fun clearChilds() {
+        if (rendered) Lumina.exec("""document.getElementById("$id").innerHTML = """"".trimIndent())
+        else childs.clear()
+    }
+
+    fun attr(key: String, value: String) {
+        if (rendered) Lumina.exec("""document.getElementById("$id").setAttribute(`$key`, `$value`)""".trimIndent())
+        else attributes[key] = value
+    }
+
+    var value: String
+        get() {
+            return if (rendered) Lumina.exec("""document.getElementById("$id").value""".trimIndent())
+            else attributes["value"] ?: ""
+        }
+        set(value) {
+            if (rendered) Lumina.exec("""document.getElementById("$id").value = `$value`""".trimIndent())
+            attributes["value"] = value
+        }
+
+    fun onClick(res: () -> Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').onclick = () => clickHandler('$id')")
+        else attributes["onclick"] = "clickHandler('$id')"
+        WebViewIPC.clickListeners[id] = res
+    }
+
+    fun onMouseEnter(res: ()->Unit){
+        if (rendered) Lumina.exec("document.getElementById('$id').onmouseenter = () => mouseEnterHandler('$id')")
+        else attributes["onmouseenter"] = "mouseEnterHandler('$id')"
+        WebViewIPC.onMouseEnterListeners[id] = res
+    }
+
+    fun onMouseLeave(res: ()->Unit){
+        if (rendered) Lumina.exec("document.getElementById('$id').onmouseleave = () => mouseLeaveHandler('$id')")
+        else attributes["onmouseleave"] = "mouseLeaveHandler('$id')"
+        WebViewIPC.onMouseLeaveListeners[id] = res
+    }
+
+    fun onChange(res: ()->Unit){
+        if (rendered) Lumina.exec("document.getElementById('$id').onchange = () => changeHandler('$id')")
+        else attributes["onchange"] = "changeHandler('$id')"
+        WebViewIPC.onChangeListeners[id] = res
+    }
+
+    fun onInput(res: ()->Unit){
+        if (rendered) Lumina.exec("document.getElementById('$id').oninput = () => inputHandler('$id')")
+        else attributes["oninput"] = "inputHandler('$id')"
+        WebViewIPC.onInputListeners[id] = res
+    }
+
+    fun onScroll(res: ()->Unit){
+        if (rendered) Lumina.exec("document.getElementById('$id').onscroll = () => scrollHandler('$id')")
+        else attributes["onscroll"] = "scrollHandler('$id')"
+        WebViewIPC.onScrollListeners[id] = res
+    }
+
+    fun onKeyPress(res: ()->Unit){
+        if (rendered) Lumina.exec("document.getElementById('$id').onkeypress = () => keyPressHandler('$id')")
+        else attributes["onkeypress"] = "keyPressHandler('$id')"
+        WebViewIPC.onKeyPressListeners[id] = res
+    }
+
+    fun onKeyUp(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').onkeyup = () => keyUpHandler('$id')")
+        else attributes["onkeyup"] = "keyUpHandler('$id')"
+        WebViewIPC.onKeyUpListeners[id] = res
+    }
+
+    fun onKeyDown(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').onkeydown = () => keyDownHandler('$id')")
+        else attributes["onkeydown"] = "keyDownHandler('$id')"
+        WebViewIPC.onKeyDownListeners[id] = res
+    }
+
+    fun onContextMenu(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').oncontextmenu = () => contextMenuHandler('$id')")
+        else attributes["oncontextmenu"] = "contextMenuHandler('$id')"
+        WebViewIPC.onContextMenuListeners[id] = res
+    }
+
+    fun onDoubleClick(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').ondblclick = () => doubleClickHandler('$id')")
+        else attributes["ondblclick"] = "doubleClickHandler('$id')"
+        WebViewIPC.onDoubleClickListeners[id] = res
+    }
+
+    fun onFocus(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').onfocus = () => focusHandler('$id')")
+        else attributes["onfocus"] = "focusHandler('$id')"
+        WebViewIPC.onFocusListeners[id] = res
+    }
+
+    fun onBlur(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').onblur = () => blurHandler('$id')")
+        else attributes["onblur"] = "blurHandler('$id')"
+        WebViewIPC.onBlurListeners[id] = res
+    }
+
+    fun onDrag(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').ondrag = () => dragHandler('$id')")
+        else attributes["ondrag"] = "dragHandler('$id')"
+        WebViewIPC.onDragListeners[id] = res
+    }
+
+    fun onDragEnd(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').ondragend = () => dragEndHandler('$id')")
+        else attributes["ondragend"] = "dragEndHandler('$id')"
+        WebViewIPC.onDragEndListeners[id] = res
+    }
+
+    fun onDragEnter(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').ondragenter = () => dragEnterHandler('$id')")
+        else attributes["ondragenter"] = "dragEnterHandler('$id')"
+        WebViewIPC.onDragEnterListeners[id] = res
+    }
+
+    fun onDragExit(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').ondragexit = () => dragExitHandler('$id')")
+        else attributes["ondragexit"] = "dragExitHandler('$id')"
+        WebViewIPC.onDragExitListeners[id] = res
+    }
+
+    fun onDragLeave(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').ondragleave = () => dragLeaveHandler('$id')")
+        else attributes["ondragleave"] = "dragLeaveHandler('$id')"
+        WebViewIPC.onDragLeaveListeners[id] = res
+    }
+
+    fun onDragOver(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').ondragover = () => dragOverHandler('$id')")
+        else attributes["ondragover"] = "dragOverHandler('$id')"
+        WebViewIPC.onDragOverListeners[id] = res
+    }
+
+    fun onDragStart(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').ondragstart = () => dragStartHandler('$id')")
+        else attributes["ondragstart"] = "dragStartHandler('$id')"
+        WebViewIPC.onDragStartListeners[id] = res
+    }
+
+    fun onDrop(res: ()->Unit) {
+        if (rendered) Lumina.exec("document.getElementById('$id').ondrop = () => dropHandler('$id')")
+        else attributes["ondrop"] = "dropHandler('$id')"
+        WebViewIPC.onDropListeners[id] = res
+    }
+}
