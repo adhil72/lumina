@@ -1,8 +1,5 @@
 package lumina
 
-import gecw.ace.lumina.ui.View
-import gecw.ace.lumina.utils.WebViewIPC
-import gecw.ace.lumina.utils.getResourceAsString
 import javafx.animation.PauseTransition
 import javafx.application.Application
 import javafx.application.Platform
@@ -10,6 +7,9 @@ import javafx.event.EventHandler
 import javafx.scene.web.WebView
 import javafx.stage.Stage
 import javafx.util.Duration
+import lumina.ui.View
+import lumina.utils.WebViewIPC
+import lumina.utils.getResourceAsString
 
 open class Lumina : Application() {
 

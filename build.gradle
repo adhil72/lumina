@@ -1,12 +1,11 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.0.0'
     id 'org.openjfx.javafxplugin' version '0.0.9'
-    id 'application'
-
+    id 'maven-publish'
 }
 
-group = 'gecw.ace'
-version = '1.0-SNAPSHOT'
+group = 'solid.lumina'
+version = '1.0'
 
 repositories {
     mavenCentral()
@@ -24,35 +23,28 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.graphics' ,'javafx.web','javafx.media']
 }
 
-test {
-    useJUnitPlatform()
-}
-
-application {
-    mainClass = 'gecw.ace.MainKt'
-}
-
-kotlin {
-    jvmToolchain(18)
-}
-
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        myLib(MavenPublication) {
             from components.java
-            groupId = 'solid.lumina'
-            artifactId = 'slmna'
-            version = '1.0.0'
         }
     }
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/adhil/lumina")
+            name = "lumina" //  optional target repository name
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
+                username = 'alice'
+                password = 'my-password'
             }
         }
     }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+kotlin {
+    jvmToolchain(18)
 }
