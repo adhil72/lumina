@@ -1,3 +1,4 @@
+<script>
 
                         function sendMessageToJava(message) {
                             ipc.receiveMessage(JSON.stringify(message));
@@ -90,3 +91,10 @@
                         function blurHandler(id) {
                             sendMessageToJava({id, path: "blur"});
                         }
+
+                        function clickAndPreventPropagationHandler(e, id) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            clickHandler(id);
+                        }
+</script>

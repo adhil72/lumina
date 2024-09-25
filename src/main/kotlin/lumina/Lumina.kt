@@ -1,8 +1,5 @@
 package lumina
 
-import gecw.ace.lumina.ui.View
-import gecw.ace.lumina.utils.WebViewIPC
-import gecw.ace.lumina.utils.getResourceAsString
 import javafx.animation.PauseTransition
 import javafx.application.Application
 import javafx.application.Platform
@@ -10,6 +7,9 @@ import javafx.event.EventHandler
 import javafx.scene.web.WebView
 import javafx.stage.Stage
 import javafx.util.Duration
+import lumina.ui.View
+import lumina.utils.WebViewIPC
+import lumina.utils.getResourceAsString
 
 open class Lumina : Application() {
 
@@ -61,6 +61,22 @@ open class Lumina : Application() {
             return exec("""document.getElementsByTagName('html')[0].innerHTML """.trimIndent())
         }
 
+        fun WaitForElement(selector: String, action: () -> Unit) {
+            val interval = 100.0
+            var count = 0
+            setInterval(interval) {
+                count++
+                if (count > 100) {
+                    println("Element not found")
+                    return@setInterval true
+                }
+                if (exec("""document.querySelector("$selector")""") != "null") {
+                    action()
+                    return@setInterval true
+                }
+                return@setInterval false
+            }
+        }
     }
 
     override fun start(p0: Stage?) {
@@ -72,14 +88,13 @@ open class Lumina : Application() {
         }
 
         var htmlContent = getResourceAsString("root.html")
-        htmlContent = htmlContent.replace("""<script id="config.script"></script>""","""
-            <script id="config.script">
-                ${getResourceAsString("ipc.js")}
-            </script>
-            <script>
-                ${getResourceAsString("tw.js")}
-            </script>
-        """.trimIndent())
+        htmlContent = htmlContent.replace(
+            """<script id="config.script"></script>""", """
+             ${getResourceAsString("ipc.js")}
+             ${getResourceAsString("tw.js")}
+
+        """.trimIndent()
+        )
         WebViewIPC(webView.engine)
         webView.engine.loadContent(htmlContent)
         webView.engine.loadWorker.stateProperty()

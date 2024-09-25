@@ -29,30 +29,9 @@ test {
 }
 
 application {
-    mainClass = 'gecw.ace.MainKt'
+    mainClass = 'MainKt'
 }
 
 kotlin {
     jvmToolchain(18)
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            groupId = 'solid.lumina'
-            artifactId = 'slmna'
-            version = '1.0.0'
-        }
-    }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/adhil/lumina")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
-            }
-        }
-    }
 }
