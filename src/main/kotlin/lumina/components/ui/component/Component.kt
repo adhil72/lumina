@@ -1,13 +1,11 @@
 package lumina.components.ui.component
 
-import javafx.scene.web.WebView
 import lumina.Lumina
 import lumina.components.attributes.Attributes
 import lumina.components.events.Events
 import lumina.components.ipc.WebViewIPC
 import lumina.components.styles.Styles
 import lumina.modals.Listener
-import netscape.javascript.JSObject
 import java.util.*
 
 open class Component(val tagName: String) {
@@ -16,7 +14,7 @@ open class Component(val tagName: String) {
     private val classNames = mutableListOf<String>()
     private val stylesMap = HashMap<String, String>()
     var rendered = false
-    var id: String = "lumina_"+UUID.randomUUID().toString()
+    var id: String = "lumina_" + UUID.randomUUID().toString()
         set(value) {
             field = value
             setAttribute("id", value)
@@ -49,14 +47,21 @@ open class Component(val tagName: String) {
 
     open fun addChildAtBeginning(child: Component) {
         childs.add(0, child)
-        if (rendered) Lumina.exec("""
+        if (rendered) Lumina.exec(
+            """
             document.getElementById('$id').innerHTML = `${child.render()}` + document.getElementById('$id').innerHTML
-        """.trimIndent())
+        """.trimIndent()
+        )
+    }
+
+    fun addText(text: String) {
+        childs.add(text)
+        if (rendered) Lumina.exec("document.getElementById('$id').innerHTML += '$text'")
     }
 
     fun setText(text: String) {
         childs.add(text)
-        if (rendered) Lumina.exec("document.getElementById('$id').innerHTML += '$text'")
+        if (rendered) Lumina.exec("document.getElementById('$id').innerHTML = '$text'")
     }
 
     fun setChild(child: Component) {
@@ -70,10 +75,13 @@ open class Component(val tagName: String) {
     fun setClassName(className: String) {
         if (!rendered) className.split(" ").forEach { classNames.add(it) }
         else {
-            val newClass = getAttribute("class") +" "+ className
-            setAttribute("class", "")
-            setAttribute("class", newClass)
+            className.split(" ").forEach { Lumina.exec("document.getElementById('$id').className = `$it`") }
         }
+    }
+
+    fun addClassName(className: String) {
+        if (!rendered) className.split(" ").forEach { classNames.add(it) }
+        else className.split(" ").forEach { Lumina.exec("document.getElementById('$id').classList.add(`$it`)") }
     }
 
     fun removeClassName(className: String) {
@@ -94,7 +102,7 @@ open class Component(val tagName: String) {
     }
 
     fun addEvent(event: String, action: (data: Component?) -> Unit): Listener {
-        setAttribute(event,"sendMessageToJava(\"$id::$event\",event)")
+        setAttribute(event, "sendMessageToJava(\"$id::$event\",event)")
         val listener = Listener(id, event, action)
         WebViewIPC.listeners.add(listener)
         return listener
@@ -134,7 +142,7 @@ open class Component(val tagName: String) {
         }
     }
 
-    fun onRendered(callback: ()->Unit) {
+    fun onRendered(callback: () -> Unit) {
         if (rendered) return callback()
         WebViewIPC.waitComponents.add(this)
         onReady = callback

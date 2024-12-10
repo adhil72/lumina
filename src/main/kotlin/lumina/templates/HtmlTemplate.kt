@@ -2,7 +2,8 @@ package lumina.templates
 
 import lumina.utils.getResourceAsString
 
-val template = """
+fun htmlTemplate(): String {
+    return """
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -10,8 +11,10 @@ val template = """
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Lumina</title>
-
             <style>
+                @tailwind base;
+                @tailwind components;
+                @tailwind utilities;
                 body {
                     margin: 0;
                     padding: 0;
@@ -53,12 +56,9 @@ val template = """
             </style>
         </head>
         <body>
-            <div id="root"></div>
+            <div id="root" class="z-10"></div>
             ${getResourceAsString("ipc.js")}
         </body>
         </html>
     """.trimIndent()
-
-fun htmlTemplate(): String {
-    return template
 }

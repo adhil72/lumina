@@ -28,7 +28,7 @@ open class Lumina( private val htmlTemplate: String = htmlTemplate()) : Applicat
     }
 
     private fun validateHtmlTemplate(htmlTemplate: String) {
-        if (!htmlTemplate.contains("<div id=\"root\"></div>")) {
+        if (!htmlTemplate.contains("<div id=\"root\"")) {
             throw Exception("The html template must contain \"<div id=\"root\"></div>\"")
         }
     }
