@@ -9,6 +9,32 @@
     <version>packed</version>
     <packaging>jar</packaging>
 
+    <name>Lumina</name>
+    <description>A Kotlin library for awesome features</description>
+    <url>https://github.com/adhil72/lumina</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>adhil72</id>
+            <name>Adhil Muhamemd k</name>
+            <email>adhilmhdk72.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/adhil72/lumina</url>
+        <connection>scm:git:https://github.com/adhil72/lumina.git</connection>
+        <developerConnection>scm:git:https://github.com/adhil72/lumina.git</developerConnection>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
