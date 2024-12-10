@@ -2,7 +2,7 @@ package lumina.components.ui.form
 
 import lumina.components.ui.component.Component
 
-class Input(name: String = "input") : Component(name) {
+open class Input(name: String = "input") : Component(name) {
 
     var type: String = "text"
         set(value) {

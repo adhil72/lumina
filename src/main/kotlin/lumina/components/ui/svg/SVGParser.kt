@@ -6,7 +6,7 @@ import org.w3c.dom.Node
 import lumina.utils.getResourceAsString
 import javax.xml.parsers.DocumentBuilderFactory
 
-class SVGParser {
+open class SVGParser {
     companion object {
         fun parse(resourcePath: String): Svg {
             val svgString = getResourceAsString(resourcePath)

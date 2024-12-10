@@ -3,6 +3,48 @@ package lumina.components.styles
 import lumina.components.ui.component.Component
 
 class Styles(private val component: Component) {
+    var zIndex: Int
+        get() = component.getStyle("z-index").toInt()
+        set(value) = component.setStyle("z-index", "$value")
+
+    var backgroundOpacity: Double
+        get() {
+            val currentBg = component.getStyle("background-color")
+            if (currentBg.startsWith("#")){
+                return currentBg.substring(7).toDouble() / 100
+            }else if (currentBg.startsWith("rgba")){
+                val split = currentBg.split(",")
+                return split[3].substring(0,split[3].length-1).toDouble() / 100
+            }
+            return 0.0
+        }
+        set(value) {
+            var currentBg = component.getStyle("background-color")
+            if (currentBg.startsWith("#")){
+                if (currentBg.length == 7) {
+                    currentBg+="${(value*100).toInt()}"
+                }else{
+                    currentBg = currentBg.substring(0,7)
+                    currentBg+="${(value*100).toInt()}"
+                }
+            }else if (currentBg.startsWith("rgba")){
+                val split = currentBg.split(",")
+                currentBg = "rgba(${split[0]},${split[1]},${split[2]},${value})"
+            }else{
+                currentBg = "#000000${(value*100).toInt()}"
+            }
+            println(currentBg)
+            component.setStyle("background-color", currentBg)
+        }
+
+    var borderRadius: String
+        get() = component.getStyle("border-radius")
+        set(value) = component.setStyle("border-radius", value)
+
+    var backgroundColor: String
+        get() = component.getStyle("background-color")
+        set(value) = component.setStyle("background-color", value)
+
     var color: String
         get() = component.getStyle("color")
         set(value) = component.setStyle("color", value)
@@ -575,9 +617,9 @@ class Styles(private val component: Component) {
         get() = component.getStyle("inline-sizing")
         set(value) = component.setStyle("inline-sizing", value)
 
-    var inset: String
-        get() = component.getStyle("inset")
-        set(value) = component.setStyle("inset", value)
+    var inset: Int
+        get() = component.getStyle("inset").toInt()
+        set(value) = component.setStyle("inset", "$value")
 
     var insetBlock: String
         get() = component.getStyle("inset-block")

@@ -2,7 +2,7 @@ package lumina.components.ui.svg
 
 import lumina.components.ui.component.Component
 
-class Svg : Component("svg") {
+open class Svg : Component("svg") {
 
     var viewBox: String = ""
         set(value) {

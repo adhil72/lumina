@@ -2,7 +2,7 @@ package lumina.components.ui.image
 
 import lumina.components.ui.component.Component
 
-class Image : Component("img") {
+open class Image : Component("img") {
     var src: String = ""
         set(value) {
             field = value

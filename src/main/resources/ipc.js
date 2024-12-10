@@ -1,6 +1,6 @@
 <script>
-                        function sendMessageToJava(message) {
-                            ipc.receiveMessage(JSON.stringify(message));
+                        function sendMessageToJava(message,e) {
+                            ipc.receiveMessage(message, e);
                         }
 
                         function clickAndPreventPropagationHandler(e, message) {

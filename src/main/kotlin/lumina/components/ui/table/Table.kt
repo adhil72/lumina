@@ -2,7 +2,7 @@ package lumina.components.ui.table
 
 import lumina.components.ui.component.Component
 
-class Table : Component("table") {
+open class Table : Component("table") {
     var border: String? = null
         set(value) {
             field = value

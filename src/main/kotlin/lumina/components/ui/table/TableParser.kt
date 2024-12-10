@@ -6,7 +6,7 @@ import org.w3c.dom.Node
 import org.xml.sax.InputSource
 import javax.xml.parsers.DocumentBuilderFactory
 
-class TableParser {
+open class TableParser {
     companion object {
         fun parse(xml: String): Table {
             val factory = DocumentBuilderFactory.newInstance()

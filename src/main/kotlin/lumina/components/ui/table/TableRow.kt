@@ -2,7 +2,7 @@ package lumina.components.ui.table
 
 import lumina.components.ui.component.Component
 
-class TableRow : Component("tr") {
+open class TableRow : Component("tr") {
     fun addHeaderCell(headerCell: TableHeaderCell): TableRow {
         addChild(headerCell)
         return this

@@ -3,7 +3,7 @@ package lumina.components.ui
 import lumina.components.ui.component.Component
 import lumina.utils.openLink
 
-class Link : Component("span") {
+open class Link : Component("span") {
 
     var href: String = ""
         set(value) {

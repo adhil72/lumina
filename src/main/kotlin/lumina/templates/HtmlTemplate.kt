@@ -10,6 +10,7 @@ val template = """
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Lumina</title>
+
             <style>
                 body {
                     margin: 0;
@@ -54,12 +55,10 @@ val template = """
         <body>
             <div id="root"></div>
             ${getResourceAsString("ipc.js")}
-            <<--TAILWINDCSS-->>
         </body>
         </html>
     """.trimIndent()
 
-fun htmlTemplate(enableTailwindCss: Boolean): String {
-    if (enableTailwindCss) return template.replace("<<--TAILWINDCSS-->>", getResourceAsString("tw.js"))
-    return template.replace("<<--TAILWINDCSS-->>", "")
+fun htmlTemplate(): String {
+    return template
 }

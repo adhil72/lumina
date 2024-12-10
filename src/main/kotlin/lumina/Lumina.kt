@@ -10,7 +10,7 @@ import javafx.scene.web.WebView
 import javafx.stage.Stage
 import lumina.templates.htmlTemplate
 
-open class Lumina(private val enableTailwindCss: Boolean = false, private val htmlTemplate: String = htmlTemplate(enableTailwindCss)) : Application() {
+open class Lumina( private val htmlTemplate: String = htmlTemplate()) : Application() {
 
 
     override fun start(primaryStage: Stage) {
@@ -58,7 +58,7 @@ open class Lumina(private val enableTailwindCss: Boolean = false, private val ht
         }
 
         fun exec(script: String): Any {
-            return webView.engine.executeScript(script)
+            return webView.engine.executeScript(script)?:""
         }
 
         fun push(component: Component) {
@@ -90,7 +90,9 @@ open class Lumina(private val enableTailwindCss: Boolean = false, private val ht
 
         fun getElemById(id: String): Component {
             val element = exec("document.getElementById('$id')?.outerHTML || ''").toString()
-            return ComponentParser.parseHtmlToComponent(element)
+            return ComponentParser.parseHtmlToComponent(element).apply {
+                rendered = true
+            }
         }
     }
 }

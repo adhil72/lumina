@@ -4,7 +4,7 @@ package lumina.components.ui.image
 import org.w3c.dom.Element
 import javax.xml.parsers.DocumentBuilderFactory
 
-class ImageParser {
+open class ImageParser {
     companion object {
         fun parse(htmlString: String): Image {
             val factory = DocumentBuilderFactory.newInstance()

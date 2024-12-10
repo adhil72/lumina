@@ -2,7 +2,7 @@ package lumina.components.ui.form
 
 import lumina.components.ui.component.Component
 
-class Form(name: String = "form") : Component(name) {
+open class Form(name: String = "form") : Component(name) {
 
     var action: String? = null
         set(value) {

@@ -1,5 +1,5 @@
 package lumina.components.ui.media
 
 
-class Audio: Media("video") {
+open class Audio: Media("video") {
 }

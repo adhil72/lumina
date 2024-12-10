@@ -42,12 +42,11 @@ class WebViewIPC(private val webEngine: WebEngine,private val onReady: (() -> Un
             val data: IpcMessage = IpcMessage.fromJson(message)
             val event = data.event
             val id = data.id
+            target.rendered = true
 
-            Platform.runLater {
-                listeners.forEach {
-                    if (it.id == id && it.event == event) {
-                        it.action.invoke(target)
-                    }
+            listeners.forEach {
+                if (it.id == id && it.event == event) {
+                    it.action.invoke(target)
                 }
             }
         } catch (e: Exception) {

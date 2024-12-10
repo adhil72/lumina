@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+<input class="" id="api-input" type="text" placeholder="Enter API Key"
+       style="border: 1px solid #d1d5db; border-radius: 0.375rem 0 0 0.375rem; padding: 0.5rem 1rem; outline: none; flex-grow: 1;"
+       oninput="sendMessageToJava('api-input::oninput',event)">
+
+<script>
+    function sendMessageToJava(message, event) {
+        let el = document.getElementById('api-input');
+        console.log(el.getAttribute("value"));
+    }
+</script>
+</body>
+</html>

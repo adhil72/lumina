@@ -2,7 +2,7 @@ package lumina.components.ui.iframe
 
 import lumina.components.ui.component.Component
 
-class Iframe : Component("iframe") {
+open class Iframe : Component("iframe") {
 
     var src: String = ""
         set(value) {
