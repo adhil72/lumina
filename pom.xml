@@ -79,20 +79,6 @@
                 </executions>
             </plugin>
 
-            <!-- JAR Packaging Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- JavaFX Plugin -->
             <plugin>
                 <groupId>org.openjfx</groupId>
@@ -114,6 +100,22 @@
                         <option>javafx.controls,javafx.fxml,javafx.web</option>
                     </options>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>sources</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
