@@ -46,6 +46,22 @@ open class Lumina( private val htmlTemplate: String = htmlTemplate()) : Applicat
         var ipcReady = false
         val idList = mutableListOf<String>()
 
+        fun addFontStyle(src:String){
+            exec("""
+                  const style = document.createElement('style');
+    style.textContent = `
+      @font-face {
+        font-family: 'DynamicFont';
+        src: url('${src}') format('woff2');
+      }
+      body {
+        font-family: 'DynamicFont', Arial, sans-serif;
+      }
+    `;
+    document.head.appendChild(style);
+            """.trimIndent())
+        }
+
 
         fun getCurrentHtml(): String {
             return webView.engine.executeScript("document.documentElement.outerHTML").toString()
