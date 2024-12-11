@@ -1,6 +1,7 @@
 package lumina.templates
 
 import lumina.utils.getResourceAsString
+import lumina.utils.getResourcePath
 
 fun htmlTemplate(): String {
     return """
@@ -12,6 +13,13 @@ fun htmlTemplate(): String {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Lumina</title>
             <style>
+                @font-face {
+                    font-family: 'MyCustomFont';
+                    src: url('${getResourcePath("fonts/Roboto-Black.ttf")}') format('truetype');
+                }
+                body {
+                    font-family: 'MyCustomFont', sans-serif;
+                }
                 @tailwind base;
                 @tailwind components;
                 @tailwind utilities;
