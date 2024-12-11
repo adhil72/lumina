@@ -15,7 +15,7 @@ fun htmlTemplate(): String {
             <style>
                 @font-face {
                     font-family: 'MyCustomFont';
-                    src: url('${getResourcePath("fonts/Roboto-Black.ttf")}') format('truetype');
+                    src: url('${getResourcePath("fonts/roboto.ttf")}') format('truetype');
                 }
                 body {
                     font-family: 'MyCustomFont', sans-serif;
