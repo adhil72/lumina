@@ -13,16 +13,6 @@ fun htmlTemplate(): String {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Lumina</title>
             <style>
-                @font-face {
-                    font-family: 'MyCustomFont';
-                    src: url('${getResourcePath("fonts/roboto.ttf")}') format('truetype');
-                }
-                body {
-                    font-family: 'MyCustomFont', sans-serif;
-                }
-                @tailwind base;
-                @tailwind components;
-                @tailwind utilities;
                 body {
                     margin: 0;
                     padding: 0;
@@ -46,6 +36,7 @@ fun htmlTemplate(): String {
                     scrollbar-width: thin;
                     scrollbar-color: #888888 #f0f0f0;
                 }
+                
                 *{
                     -webkit-user-select: none;
                     -moz-user-select: none;
@@ -64,7 +55,7 @@ fun htmlTemplate(): String {
             </style>
         </head>
         <body>
-            <div id="root" class="z-10"></div>
+            <div id="root"></div>
             ${getResourceAsString("ipc.js")}
         </body>
         </html>

@@ -9,13 +9,13 @@ import javafx.scene.Scene
 import javafx.scene.web.WebView
 import javafx.stage.Stage
 import lumina.templates.htmlTemplate
+import lumina.utils.getResourceAsString
 
-open class Lumina( private val htmlTemplate: String = htmlTemplate()) : Application() {
+open class Lumina( private val htmlTemplate: String = htmlTemplate(), private val enableTailwindCss: Boolean = false) : Application() {
 
 
     override fun start(primaryStage: Stage) {
         System.setProperty("prism.forceGPU", "true")
-//        validateHtmlTemplate(htmlTemplate)
         webView = WebView()
         webView.engine.loadContent(htmlTemplate)
         scene = Scene(webView, 800.0, 600.0)
@@ -23,6 +23,7 @@ open class Lumina( private val htmlTemplate: String = htmlTemplate()) : Applicat
         primaryStage.scene = scene
         primaryStage.show()
         WebViewIPC(webView.engine){
+            if (enableTailwindCss) Lumina.exec(getResourceAsString("tw.js"))
             onWindowCreated()
         }
     }
