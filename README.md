@@ -32,16 +32,27 @@ At the heart of Lumina lies a set of fundamental concepts that drive its functio
 
 ### Project Setup: Laying the Groundwork
 
-1. **Maven Dependency: Embracing Lumina**
+1. **To get a Git project into your build**
+
+    Add the JitPack repository to your build file :
+    ```xml
+    <repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://www.jitpack.io</url>
+		</repository>
+	</repositories>
+    ```
+2. **Add the dependency**
 
     Integrate Lumina into your project by adding the following dependency to your `pom.xml`:
 
     ```xml
     <dependency>
-        <groupId>lumina</groupId>
-        <artifactId>Lumina</artifactId>
-        <version>2.0.3</version>
-    </dependency>
+	    <groupId>com.github.adhil72</groupId>
+	    <artifactId>lumina</artifactId>
+	    <version>4.0.0</version>
+	</dependency>
     ```
 
 ### Creating a Basic Lumina Application: Your First Steps
