@@ -13,7 +13,6 @@ import lumina.utils.getResourceAsString
 
 open class Lumina( private val htmlTemplate: String = htmlTemplate(), private val enableTailwindCss: Boolean = false) : Application() {
 
-
     override fun start(primaryStage: Stage) {
         System.setProperty("prism.forceGPU", "true")
         webView = WebView()
