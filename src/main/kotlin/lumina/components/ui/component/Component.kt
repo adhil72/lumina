@@ -11,8 +11,8 @@ import java.util.*
 open class Component(val tagName: String) {
     private val childs = mutableListOf<Any>()
     private val attributesMap = mutableMapOf<String, String>()
-    private val classNames = mutableListOf<String>()
-    private val stylesMap = HashMap<String, String>()
+    private val classNames by lazy { mutableListOf<String>() }
+    private val stylesMap by lazy { HashMap<String, String>() }
     var rendered = false
     var id: String = "lumina_" + UUID.randomUUID().toString()
         set(value) {
@@ -42,7 +42,12 @@ open class Component(val tagName: String) {
 
     open fun addChild(child: Component) {
         childs.add(child)
-        if (rendered) Lumina.exec("document.getElementById('$id').innerHTML += `${child.render()}`")
+        if (rendered) Lumina.exec(
+            """
+    let elem = document.createElement('${child.tagName}');
+    elem.innerHTML = `${child.render()}`;
+    document.getElementById('$id').appendChild(elem);"""
+        )
     }
 
     open fun addChildAtBeginning(child: Component) {
@@ -118,21 +123,17 @@ open class Component(val tagName: String) {
         else throw IllegalStateException("Component not rendered")
     }
 
-    fun getStyle(s: String): String {
-        if (rendered) {
-            return Lumina.exec("document.getElementById('$id').style.getPropertyValue('$s')") as String
+    private fun getProperty(property: String, map: Map<String, String>): String {
+        return if (rendered) {
+            Lumina.exec("document.getElementById('$id').$property") as String
         } else {
-            return stylesMap[s] ?: ""
+            map[property] ?: ""
         }
     }
 
-    fun getAttribute(s: String): String {
-        return if (rendered) {
-            Lumina.exec("document.getElementById('$id').$s") as String
-        } else {
-            attributesMap[s] ?: ""
-        }
-    }
+    fun getStyle(style: String) = getProperty(style, stylesMap)
+
+    fun getAttribute(attribute: String) = getProperty(attribute, attributesMap)
 
     fun setAttribute(s: String, value: String) {
         if (rendered) {
@@ -155,6 +156,11 @@ open class Component(val tagName: String) {
         } else {
             attributesMap.remove(s)
         }
+    }
+
+    fun clearChildren() {
+        childs.clear()
+        if (rendered) Lumina.exec("document.getElementById('$id').innerHTML = ''")
     }
 
     override fun toString(): String {

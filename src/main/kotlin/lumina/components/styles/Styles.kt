@@ -2,6 +2,7 @@ package lumina.components.styles
 
 import lumina.components.ui.component.Component
 
+@Suppress("unused")
 class Styles(private val component: Component) {
     var zIndex: Int
         get() = component.getStyle("z-index").toInt()
@@ -10,28 +11,28 @@ class Styles(private val component: Component) {
     var backgroundOpacity: Double
         get() {
             val currentBg = component.getStyle("background-color")
-            if (currentBg.startsWith("#")){
+            if (currentBg.startsWith("#")) {
                 return currentBg.substring(7).toDouble() / 100
-            }else if (currentBg.startsWith("rgba")){
+            } else if (currentBg.startsWith("rgba")) {
                 val split = currentBg.split(",")
-                return split[3].substring(0,split[3].length-1).toDouble() / 100
+                return split[3].substring(0, split[3].length - 1).toDouble() / 100
             }
             return 0.0
         }
         set(value) {
             var currentBg = component.getStyle("background-color")
-            if (currentBg.startsWith("#")){
+            if (currentBg.startsWith("#")) {
                 if (currentBg.length == 7) {
-                    currentBg+="${(value*100).toInt()}"
-                }else{
-                    currentBg = currentBg.substring(0,7)
-                    currentBg+="${(value*100).toInt()}"
+                    currentBg += "${(value * 100).toInt()}"
+                } else {
+                    currentBg = currentBg.substring(0, 7)
+                    currentBg += "${(value * 100).toInt()}"
                 }
-            }else if (currentBg.startsWith("rgba")){
+            } else if (currentBg.startsWith("rgba")) {
                 val split = currentBg.split(",")
                 currentBg = "rgba(${split[0]},${split[1]},${split[2]},${value})"
-            }else{
-                currentBg = "#000000${(value*100).toInt()}"
+            } else {
+                currentBg = "#000000${(value * 100).toInt()}"
             }
             println(currentBg)
             component.setStyle("background-color", currentBg)
@@ -796,7 +797,6 @@ class Styles(private val component: Component) {
     var masonryTemplateAreas: String
         get() = component.getStyle("masonry-template-areas")
         set(value) = component.setStyle("masonry-template-areas", value)
-
     var masonryTemplateTracks: String
         get() = component.getStyle("masonry-template-tracks")
         set(value) = component.setStyle("masonry-template-tracks", value)
@@ -1432,4 +1432,895 @@ class Styles(private val component: Component) {
     var wrapThrough: String
         get() = component.getStyle("wrap-through")
         set(value) = component.setStyle("wrap-through", value)
+
+    // --- Missing CSS Properties (Added) ---
+
+    // A
+
+    var all: String
+        get() = component.getStyle("all")
+        set(value) = component.setStyle("all", value)
+
+    // B
+
+    var background: String
+        get() = component.getStyle("background")
+        set(value) = component.setStyle("background", value)
+
+    var backgroundAttachment: String
+        get() = component.getStyle("background-attachment")
+        set(value) = component.setStyle("background-attachment", value)
+
+    var backgroundBlendMode: String
+        get() = component.getStyle("background-blend-mode")
+        set(value) = component.setStyle("background-blend-mode", value)
+
+    var backgroundClip: String
+        get() = component.getStyle("background-clip")
+        set(value) = component.setStyle("background-clip", value)
+
+    var backgroundImage: String
+        get() = component.getStyle("background-image")
+        set(value) = component.setStyle("background-image", value)
+
+    var backgroundOrigin: String
+        get() = component.getStyle("background-origin")
+        set(value) = component.setStyle("background-origin", value)
+
+    var backgroundPosition: String
+        get() = component.getStyle("background-position")
+        set(value) = component.setStyle("background-position", value)
+
+    var backgroundPositionX: String
+        get() = component.getStyle("background-position-x")
+        set(value) = component.setStyle("background-position-x", value)
+
+    var backgroundPositionY: String
+        get() = component.getStyle("background-position-y")
+        set(value) = component.setStyle("background-position-y", value)
+
+    var backgroundRepeat: String
+        get() = component.getStyle("background-repeat")
+        set(value) = component.setStyle("background-repeat", value)
+
+    var backgroundSize: String
+        get() = component.getStyle("background-size")
+        set(value) = component.setStyle("background-size", value)
+
+    var border: String
+        get() = component.getStyle("border")
+        set(value) = component.setStyle("border", value)
+
+    var borderColor: String
+        get() = component.getStyle("border-color")
+        set(value) = component.setStyle("border-color", value)
+
+    var borderStyle: String
+        get() = component.getStyle("border-style")
+        set(value) = component.setStyle("border-style", value)
+
+    var borderWidth: String
+        get() = component.getStyle("border-width")
+        set(value) = component.setStyle("border-width", value)
+
+    var borderBottom: String
+        get() = component.getStyle("border-bottom")
+        set(value) = component.setStyle("border-bottom", value)
+
+    var borderBottomColor: String
+        get() = component.getStyle("border-bottom-color")
+        set(value) = component.setStyle("border-bottom-color", value)
+
+    var borderBottomLeftRadius: String
+        get() = component.getStyle("border-bottom-left-radius")
+        set(value) = component.setStyle("border-bottom-left-radius", value)
+
+    var borderBottomRightRadius: String
+        get() = component.getStyle("border-bottom-right-radius")
+        set(value) = component.setStyle("border-bottom-right-radius", value)
+
+    var borderBottomStyle: String
+        get() = component.getStyle("border-bottom-style")
+        set(value) = component.setStyle("border-bottom-style", value)
+
+    var borderBottomWidth: String
+        get() = component.getStyle("border-bottom-width")
+        set(value) = component.setStyle("border-bottom-width", value)
+
+    var borderLeft: String
+        get() = component.getStyle("border-left")
+        set(value) = component.setStyle("border-left", value)
+
+    var borderLeftColor: String
+        get() = component.getStyle("border-left-color")
+        set(value) = component.setStyle("border-left-color", value)
+
+    var borderLeftStyle: String
+        get() = component.getStyle("border-left-style")
+        set(value) = component.setStyle("border-left-style", value)
+
+    var borderLeftWidth: String
+        get() = component.getStyle("border-left-width")
+        set(value) = component.setStyle("border-left-width", value)
+
+    var borderRight: String
+        get() = component.getStyle("border-right")
+        set(value) = component.setStyle("border-right", value)
+
+    var borderRightColor: String
+        get() = component.getStyle("border-right-color")
+        set(value) = component.setStyle("border-right-color", value)
+
+    var borderRightStyle: String
+        get() = component.getStyle("border-right-style")
+        set(value) = component.setStyle("border-right-style", value)
+
+    var borderRightWidth: String
+        get() = component.getStyle("border-right-width")
+        set(value) = component.setStyle("border-right-width", value)
+
+    var borderTop: String
+        get() = component.getStyle("border-top")
+        set(value) = component.setStyle("border-top", value)
+
+    var borderTopColor: String
+        get() = component.getStyle("border-top-color")
+        set(value) = component.setStyle("border-top-color", value)
+
+    var borderTopLeftRadius: String
+        get() = component.getStyle("border-top-left-radius")
+        set(value) = component.setStyle("border-top-left-radius", value)
+
+    var borderTopRightRadius: String
+        get() = component.getStyle("border-top-right-radius")
+        set(value) = component.setStyle("border-top-right-radius", value)
+
+    var borderTopStyle: String
+        get() = component.getStyle("border-top-style")
+        set(value) = component.setStyle("border-top-style", value)
+
+    var borderTopWidth: String
+        get() = component.getStyle("border-top-width")
+        set(value) = component.setStyle("border-top-width", value)
+
+    var boxDecorationBreak: String
+        get() = component.getStyle("box-decoration-break")
+        set(value) = component.setStyle("box-decoration-break", value)
+
+    var boxShadow: String
+        get() = component.getStyle("box-shadow")
+        set(value) = component.setStyle("box-shadow", value)
+
+    // C
+
+    var clear: String
+        get() = component.getStyle("clear")
+        set(value) = component.setStyle("clear", value)
+
+    var clip: String
+        get() = component.getStyle("clip")
+        set(value) = component.setStyle("clip", value)
+
+    var clipPath: String
+        get() = component.getStyle("clip-path")
+        set(value) = component.setStyle("clip-path", value)
+
+    var colorScheme: String
+        get() = component.getStyle("color-scheme")
+        set(value) = component.setStyle("color-scheme", value)
+
+    var columnCount: String
+        get() = component.getStyle("column-count")
+        set(value) = component.setStyle("column-count", value)
+
+    var columnFill: String
+        get() = component.getStyle("column-fill")
+        set(value) = component.setStyle("column-fill", value)
+
+    var columnRule: String
+        get() = component.getStyle("column-rule")
+        set(value) = component.setStyle("column-rule", value)
+
+    var columnRuleColor: String
+        get() = component.getStyle("column-rule-color")
+        set(value) = component.setStyle("column-rule-color", value)
+
+    var columnRuleStyle: String
+        get() = component.getStyle("column-rule-style")
+        set(value) = component.setStyle("column-rule-style", value)
+
+    var columnRuleWidth: String
+        get() = component.getStyle("column-rule-width")
+        set(value) = component.setStyle("column-rule-width", value)
+
+    var columnSpan: String
+        get() = component.getStyle("column-span")
+        set(value) = component.setStyle("column-span", value)
+
+    var columnWidth: String
+        get() = component.getStyle("column-width")
+        set(value) = component.setStyle("column-width", value)
+
+    var columns: String
+        get() = component.getStyle("columns")
+        set(value) = component.setStyle("columns", value)
+
+    // D, E, F
+
+    var direction: String
+        get() = component.getStyle("direction")
+        set(value) = component.setStyle("direction", value)
+
+    var flex: String
+        get() = component.getStyle("flex")
+        set(value) = component.setStyle("flex", value)
+
+    var flexBasis: String
+        get() = component.getStyle("flex-basis")
+        set(value) = component.setStyle("flex-basis", value)
+
+    var flexDirection: String
+        get() = component.getStyle("flex-direction")
+        set(value) = component.setStyle("flex-direction", value)
+
+    var flexFlow: String
+        get() = component.getStyle("flex-flow")
+        set(value) = component.setStyle("flex-flow", value)
+
+    var flexGrow: String
+        get() = component.getStyle("flex-grow")
+        set(value) = component.setStyle("flex-grow", value)
+
+    var flexShrink: String
+        get() = component.getStyle("flex-shrink")
+        set(value) = component.setStyle("flex-shrink", value)
+
+    var flexWrap: String
+        get() = component.getStyle("flex-wrap")
+        set(value) = component.setStyle("flex-wrap", value)
+
+    var float: String
+        get() = component.getStyle("float")
+        set(value) = component.setStyle("float", value)
+
+    // G, H, I, J, K, L, M
+
+    var grid: String
+        get() = component.getStyle("grid")
+        set(value) = component.setStyle("grid", value)
+
+    var gridArea: String
+        get() = component.getStyle("grid-area")
+        set(value) = component.setStyle("grid-area", value)
+
+    var gridAutoColumns: String
+        get() = component.getStyle("grid-auto-columns")
+        set(value) = component.setStyle("grid-auto-columns", value)
+
+    var gridAutoRows: String
+        get() = component.getStyle("grid-auto-rows")
+        set(value) = component.setStyle("grid-auto-rows", value)
+
+    var gridColumn: String
+        get() = component.getStyle("grid-column")
+        set(value) = component.setStyle("grid-column", value)
+
+    var gridColumnEnd: String
+        get() = component.getStyle("grid-column-end")
+        set(value) = component.setStyle("grid-column-end", value)
+
+    var gridColumnGap: String
+        get() = component.getStyle("grid-column-gap")
+        set(value) = component.setStyle("grid-column-gap", value)
+
+    var gridColumnStart: String
+        get() = component.getStyle("grid-column-start")
+        set(value) = component.setStyle("grid-column-start", value)
+
+    var gridGap: String
+        get() = component.getStyle("grid-gap")
+        set(value) = component.setStyle("grid-gap", value)
+
+    var gridRow: String
+        get() = component.getStyle("grid-row")
+        set(value) = component.setStyle("grid-row", value)
+
+    var gridRowEnd: String
+        get() = component.getStyle("grid-row-end")
+        set(value) = component.setStyle("grid-row-end", value)
+
+    var gridRowGap: String
+        get() = component.getStyle("grid-row-gap")
+        set(value) = component.setStyle("grid-row-gap", value)
+
+    var gridRowStart: String
+        get() = component.getStyle("grid-row-start")
+        set(value) = component.setStyle("grid-row-start", value)
+
+    var gridTemplate: String
+        get() = component.getStyle("grid-template")
+        set(value) = component.setStyle("grid-template", value)
+
+    var gridTemplateAreas: String
+        get() = component.getStyle("grid-template-areas")
+        set(value) = component.setStyle("grid-template-areas", value)
+
+    var gridTemplateColumns: String
+        get() = component.getStyle("grid-template-columns")
+        set(value) = component.setStyle("grid-template-columns", value)
+
+    var gridTemplateRows: String
+        get() = component.getStyle("grid-template-rows")
+        set(value) = component.setStyle("grid-template-rows", value)
+
+    // I (continued)
+
+    var isolation: String
+        get() = component.getStyle("isolation")
+        set(value) = component.setStyle("isolation", value)
+
+    // M (continued)
+
+    var mixBlendMode: String
+        get() = component.getStyle("mix-blend-mode")
+        set(value) = component.setStyle("mix-blend-mode", value)
+
+    // O
+
+    var objectPosition: String
+        get() = component.getStyle("object-position")
+        set(value) = component.setStyle("object-position", value)
+
+    var opacity: String
+        get() = component.getStyle("opacity")
+        set(value) = component.setStyle("opacity", value)
+
+    var order: String
+        get() = component.getStyle("order")
+        set(value) = component.setStyle("order", value)
+
+    var orphans: String
+        get() = component.getStyle("orphans")
+        set(value) = component.setStyle("orphans", value)
+
+    // P, Q, R, S
+
+    var pointerEvents: String
+        get() = component.getStyle("pointer-events")
+        set(value) = component.setStyle("pointer-events", value)
+
+    // S (continued)
+
+    var scrollMargin: String
+        get() = component.getStyle("scroll-margin")
+        set(value) = component.setStyle("scroll-margin", value)
+
+    var scrollMarginBlock: String
+        get() = component.getStyle("scroll-margin-block")
+        set(value) = component.setStyle("scroll-margin-block", value)
+
+    var scrollMarginBlockEnd: String
+        get() = component.getStyle("scroll-margin-block-end")
+        set(value) = component.setStyle("scroll-margin-block-end", value)
+
+    var scrollMarginBlockStart: String
+        get() = component.getStyle("scroll-margin-block-start")
+        set(value) = component.setStyle("scroll-margin-block-start", value)
+
+    var scrollMarginBottom: String
+        get() = component.getStyle("scroll-margin-bottom")
+        set(value) = component.setStyle("scroll-margin-bottom", value)
+
+    var scrollMarginInline: String
+        get() = component.getStyle("scroll-margin-inline")
+        set(value) = component.setStyle("scroll-margin-inline", value)
+
+    var scrollMarginInlineEnd: String
+        get() = component.getStyle("scroll-margin-inline-end")
+        set(value) = component.setStyle("scroll-margin-inline-end", value)
+
+    var scrollMarginInlineStart: String
+        get() = component.getStyle("scroll-margin-inline-start")
+        set(value) = component.setStyle("scroll-margin-inline-start", value)
+
+    var scrollMarginLeft: String
+        get() = component.getStyle("scroll-margin-left")
+        set(value) = component.setStyle("scroll-margin-left", value)
+
+    var scrollMarginRight: String
+        get() = component.getStyle("scroll-margin-right")
+        set(value) = component.setStyle("scroll-margin-right", value)
+
+    var scrollMarginTop: String
+        get() = component.getStyle("scroll-margin-top")
+        set(value) = component.setStyle("scroll-margin-top", value)
+
+    var scrollPadding: String
+        get() = component.getStyle("scroll-padding")
+        set(value) = component.setStyle("scroll-padding", value)
+
+    var scrollPaddingBlock: String
+        get() = component.getStyle("scroll-padding-block")
+        set(value) = component.setStyle("scroll-padding-block", value)
+
+    var scrollPaddingBlockEnd: String
+        get() = component.getStyle("scroll-padding-block-end")
+        set(value) = component.setStyle("scroll-padding-block-end", value)
+
+    var scrollPaddingBlockStart: String
+        get() = component.getStyle("scroll-padding-block-start")
+        set(value) = component.setStyle("scroll-padding-block-start", value)
+
+    var scrollPaddingBottom: String
+        get() = component.getStyle("scroll-padding-bottom")
+        set(value) = component.setStyle("scroll-padding-bottom", value)
+
+    var scrollPaddingInline: String
+        get() = component.getStyle("scroll-padding-inline")
+        set(value) = component.setStyle("scroll-padding-inline", value)
+
+    var scrollPaddingInlineEnd: String
+        get() = component.getStyle("scroll-padding-inline-end")
+        set(value) = component.setStyle("scroll-padding-inline-end", value)
+
+    var scrollPaddingInlineStart: String
+        get() = component.getStyle("scroll-padding-inline-start")
+        set(value) = component.setStyle("scroll-padding-inline-start", value)
+
+    var scrollPaddingLeft: String
+        get() = component.getStyle("scroll-padding-left")
+        set(value) = component.setStyle("scroll-padding-left", value)
+
+    var scrollPaddingRight: String
+        get() = component.getStyle("scroll-padding-right")
+        set(value) = component.setStyle("scroll-padding-right", value)
+
+    var scrollPaddingTop: String
+        get() = component.getStyle("scroll-padding-top")
+        set(value) = component.setStyle("scroll-padding-top", value)
+
+    var scrollSnapAlign: String
+        get() = component.getStyle("scroll-snap-align")
+        set(value) = component.setStyle("scroll-snap-align", value)
+
+    var scrollSnapStop: String
+        get() = component.getStyle("scroll-snap-stop")
+        set(value) = component.setStyle("scroll-snap-stop", value)
+
+    var scrollSnapType: String
+        get() = component.getStyle("scroll-snap-type")
+        set(value) = component.setStyle("scroll-snap-type", value)
+
+    var shapeImageThreshold: String
+        get() = component.getStyle("shape-image-threshold")
+        set(value) = component.setStyle("shape-image-threshold", value)
+
+    var shapeMargin: String
+        get() = component.getStyle("shape-margin")
+        set(value) = component.setStyle("shape-margin", value)
+
+    var shapeOutside: String
+        get() = component.getStyle("shape-outside")
+        set(value) = component.setStyle("shape-outside", value)
+
+    // T, U, V, W, X, Y, Z
+
+    var touchAction: String
+        get() = component.getStyle("touch-action")
+        set(value) = component.setStyle("touch-action", value)
+
+    var transform: String
+        get() = component.getStyle("transform")
+        set(value) = component.setStyle("transform", value)
+
+    var transformBox: String
+        get() = component.getStyle("transform-box")
+        set(value) = component.setStyle("transform-box", value)
+
+    var transformOrigin: String
+        get() = component.getStyle("transform-origin")
+        set(value) = component.setStyle("transform-origin", value)
+
+    var unicodeBidi: String
+        get() = component.getStyle("unicode-bidi")
+        set(value) = component.setStyle("unicode-bidi", value)
+
+    var userZoom: String
+        get() = component.getStyle("user-zoom")
+        set(value) = component.setStyle("user-zoom", value)
+
+    var vectorEffect: String
+        get() = component.getStyle("vector-effect")
+        set(value) = component.setStyle("vector-effect", value)
+
+    var visibility: String
+        get() = component.getStyle("visibility")
+        set(value) = component.setStyle("visibility", value)
+
+    var willChange: String
+        get() = component.getStyle("will-change")
+        set(value) = component.setStyle("will-change", value)
+
+    var widows: String
+        get() = component.getStyle("widows")
+        set(value) = component.setStyle("widows", value)
+
+    // -webkit- prefixed properties (examples, add more if needed)
+
+    var webkitAppearance: String
+        get() = component.getStyle("-webkit-appearance")
+        set(value) = component.setStyle("-webkit-appearance", value)
+
+    var webkitBorderBefore: String
+        get() = component.getStyle("-webkit-border-before")
+        set(value) = component.setStyle("-webkit-border-before", value)
+
+    var webkitBorderBeforeColor: String
+        get() = component.getStyle("-webkit-border-before-color")
+        set(value) = component.setStyle("-webkit-border-before-color", value)
+
+    var webkitBorderBeforeStyle: String
+        get() = component.getStyle("-webkit-border-before-style")
+        set(value) = component.setStyle("-webkit-border-before-style", value)
+
+    var webkitBorderBeforeWidth: String
+        get() = component.getStyle("-webkit-border-before-width")
+        set(value) = component.setStyle("-webkit-border-before-width", value)
+
+    var webkitBoxReflect: String
+        get() = component.getStyle("-webkit-box-reflect")
+        set(value) = component.setStyle("-webkit-box-reflect", value)
+
+    var webkitFilter: String
+        get() = component.getStyle("-webkit-filter")
+        set(value) = component.setStyle("-webkit-filter", value)
+
+    var webkitMask: String
+        get() = component.getStyle("-webkit-mask")
+        set(value) = component.setStyle("-webkit-mask", value)
+
+    var webkitMaskClip: String
+        get() = component.getStyle("-webkit-mask-clip")
+        set(value) = component.setStyle("-webkit-mask-clip", value)
+
+    var webkitMaskComposite: String
+        get() = component.getStyle("-webkit-mask-composite")
+        set(value) = component.setStyle("-webkit-mask-composite", value)
+
+    var webkitMaskImage: String
+        get() = component.getStyle("-webkit-mask-image")
+        set(value) = component.setStyle("-webkit-mask-image", value)
+
+    var webkitMaskOrigin: String
+        get() = component.getStyle("-webkit-mask-origin")
+        set(value) = component.setStyle("-webkit-mask-origin", value)
+
+    var webkitMaskPosition: String
+        get() = component.getStyle("-webkit-mask-position")
+        set(value) = component.setStyle("-webkit-mask-position", value)
+
+    var webkitMaskPositionX: String
+        get() = component.getStyle("-webkit-mask-position-x")
+        set(value) = component.setStyle("-webkit-mask-position-x", value)
+
+    var webkitMaskPositionY: String
+        get() = component.getStyle("-webkit-mask-position-y")
+        set(value) = component.setStyle("-webkit-mask-position-y", value)
+
+    var webkitMaskRepeat: String
+        get() = component.getStyle("-webkit-mask-repeat")
+        set(value) = component.setStyle("-webkit-mask-repeat", value)
+
+    var webkitMaskRepeatX: String
+        get() = component.getStyle("-webkit-mask-repeat-x")
+        set(value) = component.setStyle("-webkit-mask-repeat-x", value)
+
+    var webkitMaskRepeatY: String
+        get() = component.getStyle("-webkit-mask-repeat-y")
+        set(value) = component.setStyle("-webkit-mask-repeat-y", value)
+
+    var webkitMaskSize: String
+        get() = component.getStyle("-webkit-mask-size")
+        set(value) = component.setStyle("-webkit-mask-size", value)
+
+    var webkitOverflowScrolling: String
+        get() = component.getStyle("-webkit-overflow-scrolling")
+        set(value) = component.setStyle("-webkit-overflow-scrolling", value)
+
+    var webkitTapHighlightColor: String
+        get() = component.getStyle("-webkit-tap-highlight-color")
+        set(value) = component.setStyle("-webkit-tap-highlight-color", value)
+
+    var webkitTextFillColor: String
+        get() = component.getStyle("-webkit-text-fill-color")
+        set(value) = component.setStyle("-webkit-text-fill-color", value)
+
+    var webkitTextSizeAdjust: String
+        get() = component.getStyle("-webkit-text-size-adjust")
+        set(value) = component.setStyle("-webkit-text-size-adjust", value)
+
+    var webkitTextStroke: String
+        get() = component.getStyle("-webkit-text-stroke")
+        set(value) = component.setStyle("-webkit-text-stroke", value)
+
+    var webkitTextStrokeColor: String
+        get() = component.getStyle("-webkit-text-stroke-color")
+        set(value) = component.setStyle("-webkit-text-stroke-color", value)
+
+    var webkitTextStrokeWidth: String
+        get() = component.getStyle("-webkit-text-stroke-width")
+        set(value) = component.setStyle("-webkit-text-stroke-width", value)
+
+    var webkitTouchCallout: String
+        get() = component.getStyle("-webkit-touch-callout")
+        set(value) = component.setStyle("-webkit-touch-callout", value)
+
+    var webkitUserModify: String
+        get() = component.getStyle("-webkit-user-modify")
+        set(value) = component.setStyle("-webkit-user-modify", value)
+
+    // -moz- prefixed properties (examples)
+
+    var mozAppearance: String
+        get() = component.getStyle("-moz-appearance")
+        set(value) = component.setStyle("-moz-appearance", value)
+
+    var mozBinding: String
+        get() = component.getStyle("-moz-binding")
+        set(value) = component.setStyle("-moz-binding", value)
+
+    var mozBorderBottomColors: String
+        get() = component.getStyle("-moz-border-bottom-colors")
+        set(value) = component.setStyle("-moz-border-bottom-colors", value)
+
+    var mozBorderLeftColors: String
+        get() = component.getStyle("-moz-border-left-colors")
+        set(value) = component.setStyle("-moz-border-left-colors", value)
+
+    var mozBorderRightColors: String
+        get() = component.getStyle("-moz-border-right-colors")
+        set(value) = component.setStyle("-moz-border-right-colors", value)
+
+    var mozBorderTopColors: String
+        get() = component.getStyle("-moz-border-top-colors")
+        set(value) = component.setStyle("-moz-border-top-colors", value)
+
+    var mozContextProperties: String
+        get() = component.getStyle("-moz-context-properties")
+        set(value) = component.setStyle("-moz-context-properties", value)
+
+    var mozFloatEdge: String
+        get() = component.getStyle("-moz-float-edge")
+        set(value) = component.setStyle("-moz-float-edge", value)
+
+    var mozForceBrokenImageIcon: String
+        get() = component.getStyle("-moz-force-broken-image-icon")
+        set(value) = component.setStyle("-moz-force-broken-image-icon", value)
+
+    var mozImageRegion: String
+        get() = component.getStyle("-moz-image-region")
+        set(value) = component.setStyle("-moz-image-region", value)
+
+    var mozOrient: String
+        get() = component.getStyle("-moz-orient")
+        set(value) = component.setStyle("-moz-orient", value)
+
+    var mozStackSizing: String
+        get() = component.getStyle("-moz-stack-sizing")
+        set(value) = component.setStyle("-moz-stack-sizing", value)
+
+    var mozTextBlink: String
+        get() = component.getStyle("-moz-text-blink")
+        set(value) = component.setStyle("-moz-text-blink", value)
+
+    var mozUserFocus: String
+        get() = component.getStyle("-moz-user-focus")
+        set(value) = component.setStyle("-moz-user-focus", value)
+
+    var mozUserInput: String
+        get() = component.getStyle("-moz-user-input")
+        set(value) = component.setStyle("-moz-user-input", value)
+
+    var mozUserModify: String
+        get() = component.getStyle("-moz-user-modify")
+        set(value) = component.setStyle("-moz-user-modify", value)
+
+    var mozWindowDragging: String
+        get() = component.getStyle("-moz-window-dragging")
+        set(value) = component.setStyle("-moz-window-dragging", value)
+
+    var mozWindowShadow: String
+        get() = component.getStyle("-moz-window-shadow")
+        set(value) = component.setStyle("-moz-window-shadow", value)
+
+    // -ms- prefixed properties (examples)
+
+    var msAccelerator: String
+        get() = component.getStyle("-ms-accelerator")
+        set(value) = component.setStyle("-ms-accelerator", value)
+
+    var msBlockProgression: String
+        get() = component.getStyle("-ms-block-progression")
+        set(value) = component.setStyle("-ms-block-progression", value)
+
+    var msContentZoomChaining: String
+        get() = component.getStyle("-ms-content-zoom-chaining")
+        set(value) = component.setStyle("-ms-content-zoom-chaining", value)
+
+    var msContentZoomLimit: String
+        get() = component.getStyle("-ms-content-zoom-limit")
+        set(value) = component.setStyle("-ms-content-zoom-limit", value)
+
+    var msContentZoomLimitMax: String
+        get() = component.getStyle("-ms-content-zoom-limit-max")
+        set(value) = component.setStyle("-ms-content-zoom-limit-max", value)
+
+    var msContentZoomLimitMin: String
+        get() = component.getStyle("-ms-content-zoom-limit-min")
+        set(value) = component.setStyle("-ms-content-zoom-limit-min", value)
+
+    var msContentZoomSnap: String
+        get() = component.getStyle("-ms-content-zoom-snap")
+        set(value) = component.setStyle("-ms-content-zoom-snap", value)
+
+    var msContentZoomSnapPoints: String
+        get() = component.getStyle("-ms-content-zoom-snap-points")
+        set(value) = component.setStyle("-ms-content-zoom-snap-points", value)
+
+    var msContentZoomSnapType: String
+        get() = component.getStyle("-ms-content-zoom-snap-type")
+        set(value) = component.setStyle("-ms-content-zoom-snap-type", value)
+
+    var msContentZooming: String
+        get() = component.getStyle("-ms-content-zooming")
+        set(value) = component.setStyle("-ms-content-zooming", value)
+
+    var msFilter: String
+        get() = component.getStyle("-ms-filter")
+        set(value) = component.setStyle("-ms-filter", value)
+
+    var msFlowFrom: String
+        get() = component.getStyle("-ms-flow-from")
+        set(value) = component.setStyle("-ms-flow-from", value)
+
+    var msFlowInto: String
+        get() = component.getStyle("-ms-flow-into")
+        set(value) = component.setStyle("-ms-flow-into", value)
+
+    var msGridColumns: String
+        get() = component.getStyle("-ms-grid-columns")
+        set(value) = component.setStyle("-ms-grid-columns", value)
+
+    var msGridRows: String
+        get() = component.getStyle("-ms-grid-rows")
+        set(value) = component.setStyle("-ms-grid-rows", value)
+
+    var msHighContrastAdjust: String
+        get() = component.getStyle("-ms-high-contrast-adjust")
+        set(value) = component.setStyle("-ms-high-contrast-adjust", value)
+
+    var msHyphenateLimitChars: String
+        get() = component.getStyle("-ms-hyphenate-limit-chars")
+        set(value) = component.setStyle("-ms-hyphenate-limit-chars", value)
+
+    var msHyphenateLimitLines: String
+        get() = component.getStyle("-ms-hyphenate-limit-lines")
+        set(value) = component.setStyle("-ms-hyphenate-limit-lines", value)
+
+    var msHyphenateLimitZone: String
+        get() = component.getStyle("-ms-hyphenate-limit-zone")
+        set(value) = component.setStyle("-ms-hyphenate-limit-zone", value)
+
+    var msImeAlign: String
+        get() = component.getStyle("-ms-ime-align")
+        set(value) = component.setStyle("-ms-ime-align", value)
+
+    var msOverflowStyle: String
+        get() = component.getStyle("-ms-overflow-style")
+        set(value) = component.setStyle("-ms-overflow-style", value)
+
+    var msScrollChaining: String
+        get() = component.getStyle("-ms-scroll-chaining")
+        set(value) = component.setStyle("-ms-scroll-chaining", value)
+
+    var msScrollLimit: String
+        get() = component.getStyle("-ms-scroll-limit")
+        set(value) = component.setStyle("-ms-scroll-limit", value)
+
+    var msScrollLimitXMax: String
+        get() = component.getStyle("-ms-scroll-limit-x-max")
+        set(value) = component.setStyle("-ms-scroll-limit-x-max", value)
+
+    var msScrollLimitXMin: String
+        get() = component.getStyle("-ms-scroll-limit-x-min")
+        set(value) = component.setStyle("-ms-scroll-limit-x-min", value)
+
+    var msScrollLimitYMax: String
+        get() = component.getStyle("-ms-scroll-limit-y-max")
+        set(value) = component.setStyle("-ms-scroll-limit-y-max", value)
+
+    var msScrollLimitYMin: String
+        get() = component.getStyle("-ms-scroll-limit-y-min")
+        set(value) = component.setStyle("-ms-scroll-limit-y-min", value)
+
+    var msScrollRails: String
+        get() = component.getStyle("-ms-scroll-rails")
+        set(value) = component.setStyle("-ms-scroll-rails", value)
+
+    var msScrollSnapPointsX: String
+        get() = component.getStyle("-ms-scroll-snap-points-x")
+        set(value) = component.setStyle("-ms-scroll-snap-points-x", value)
+
+    var msScrollSnapPointsY: String
+        get() = component.getStyle("-ms-scroll-snap-points-y")
+        set(value) = component.setStyle("-ms-scroll-snap-points-y", value)
+
+    var msScrollSnapType: String
+        get() = component.getStyle("-ms-scroll-snap-type")
+        set(value) = component.setStyle("-ms-scroll-snap-type", value)
+
+    var msScrollSnapX: String
+        get() = component.getStyle("-ms-scroll-snap-x")
+        set(value) = component.setStyle("-ms-scroll-snap-x", value)
+
+    var msScrollSnapY: String
+        get() = component.getStyle("-ms-scroll-snap-y")
+        set(value) = component.setStyle("-ms-scroll-snap-y", value)
+
+    var msScrollTranslation: String
+        get() = component.getStyle("-ms-scroll-translation")
+        set(value) = component.setStyle("-ms-scroll-translation", value)
+
+    var msScrollbarArrowColor: String
+        get() = component.getStyle("-ms-scrollbar-arrow-color")
+        set(value) = component.setStyle("-ms-scrollbar-arrow-color", value)
+
+    var msScrollbarBaseColor: String
+        get() = component.getStyle("-ms-scrollbar-base-color")
+        set(value) = component.setStyle("-ms-scrollbar-base-color", value)
+
+    var msScrollbarDarkshadowColor: String
+        get() = component.getStyle("-ms-scrollbar-darkshadow-color")
+        set(value) = component.setStyle("-ms-scrollbar-darkshadow-color", value)
+
+    var msScrollbarFaceColor: String
+        get() = component.getStyle("-ms-scrollbar-face-color")
+        set(value) = component.setStyle("-ms-scrollbar-face-color", value)
+
+    var msScrollbarHighlightColor: String
+        get() = component.getStyle("-ms-scrollbar-highlight-color")
+        set(value) = component.setStyle("-ms-scrollbar-highlight-color", value)
+
+    var msScrollbarShadowColor: String
+        get() = component.getStyle("-ms-scrollbar-shadow-color")
+        set(value) = component.setStyle("-ms-scrollbar-shadow-color", value)
+
+    var msScrollbarTrackColor: String
+        get() = component.getStyle("-ms-scrollbar-track-color")
+        set(value) = component.setStyle("-ms-scrollbar-track-color", value)
+
+    var msTextAutospace: String
+        get() = component.getStyle("-ms-text-autospace")
+        set(value) = component.setStyle("-ms-text-autospace", value)
+
+    var msTouchSelect: String
+        get() = component.getStyle("-ms-touch-select")
+        set(value) = component.setStyle("-ms-touch-select", value)
+
+    var msUserSelect: String
+        get() = component.getStyle("-ms-user-select")
+        set(value) = component.setStyle("-ms-user-select", value)
+
+    var msWrapFlow: String
+        get() = component.getStyle("-ms-wrap-flow")
+        set(value) = component.setStyle("-ms-wrap-flow", value)
+
+    var msWrapMargin: String
+        get() = component.getStyle("-ms-wrap-margin")
+        set(value) = component.setStyle("-ms-wrap-margin", value)
+
+    var msWrapThrough: String
+        get() = component.getStyle("-ms-wrap-through")
+        set(value) = component.setStyle("-ms-wrap-through", value)
+
 }

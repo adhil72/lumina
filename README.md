@@ -1,247 +1,435 @@
+Okay, here is a comprehensive documentation for the Lumina project, a Kotlin-based UI framework.
 
-# Lumina Documentation
+**Lumina UI Framework Documentation**
 
-## Overview
+**Introduction**
 
-Lumina is a Kotlin-based UI framework designed for building desktop applications using JavaFX and a WebView component. It allows developers to create user interfaces using HTML, CSS, and JavaScript, while leveraging the power of Kotlin for backend logic and application management. Lumina simplifies the development process by providing a set of reusable UI components and utilities, making it easier to build and manage complex desktop applications.
+Lumina is a modern Kotlin UI framework designed for building dynamic and interactive web-based user interfaces embedded within desktop applications. It leverages the power of JavaFX's WebView to render web content, enabling you to create desktop applications using familiar web technologies like HTML, CSS, and JavaScript, while being written in Kotlin.
 
-## Core Features
+**Core Concepts**
 
-- **Component-Based UI:** Build user interfaces using pre-built or custom components.
-- **WebView Integration:** Utilizes a JavaFX WebView to render UI elements, allowing the use of web technologies.
-- **Inter-Process Communication (IPC):** Facilitates communication between the Kotlin backend and the JavaScript frontend.
-- **Styling:** Supports CSS styling directly or through a Kotlin-based `Styles` class.
-- **Event Handling:** Provides a mechanism for handling user interactions and other events.
-- **Tailwind CSS Support:** Optionally integrate Tailwind CSS for rapid UI development.
+1. **`Lumina` Class:** The entry point for your application. It initializes the JavaFX WebView, sets up the initial HTML structure, and manages the application's lifecycle.
 
-## Getting Started
+2. **`Component` Class:** The fundamental building block of your UI. All UI elements, from simple divs to complex custom components, are derived from this class.
 
-### Prerequisites
+3. **Styling:** Lumina supports both inline styles and CSS classes for styling components. It also provides a `Styles` class for programmatic manipulation of styles.
 
-- Java Development Kit (JDK) 1.8 or higher.
-- Kotlin 2.0.20 or higher.
-- Maven build tool.
+4. **Event Handling:** Events are handled using the `Events` class, which allows you to attach listeners to various DOM events and execute Kotlin code in response.
 
-### Installation
+5. **Inter-Process Communication (IPC):** Lumina provides a built-in IPC mechanism to communicate between the Kotlin backend and the JavaScript frontend running inside the WebView.
 
-To start using Lumina, you need to include it as a dependency in your Maven project. The `pom.xml` file provided demonstrates the necessary configurations, including the Kotlin plugin, JavaFX dependencies, and other required libraries.
+**Getting Started**
 
-### Creating a Lumina Application
+**Project Setup**
 
-A Lumina application is initialized by extending the `Lumina` class and overriding the `start` method. Here's a basic example:
+1. **Maven Dependency:** Add the Lumina dependency to your `pom.xml`:
+
+    ```xml
+    <dependency>
+        <groupId>lumina</groupId>
+        <artifactId>Lumina</artifactId>
+        <version>2.0.3</version>
+    </dependency>
+    ```
+
+2. **JavaFX Dependencies:** Ensure you have the required JavaFX dependencies:
+
+    ```xml
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>YOUR_JAVAFX_VERSION</version>
+    </dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-fxml</artifactId>
+        <version>YOUR_JAVAFX_VERSION</version>
+    </dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-web</artifactId>
+        <version>YOUR_JAVAFX_VERSION</version>
+    </dependency>
+    ```
+
+**Creating a Basic Lumina Application**
 
 ```kotlin
-package test
-
 import lumina.Lumina
 import lumina.components.ui.Div
+import lumina.components.ui.component.Component
+import javafx.application.Application
+import javafx.stage.Stage
 
+class MyApp : Lumina() {
 
-class App:Lumina(enableTailwindCss = true){
+    override fun start(primaryStage: Stage) {
+        super.start(primaryStage)
+        Lumina.setTitle("My Lumina App") // Set window title
+    }
+
     override fun onWindowCreated() {
-        super.onWindowCreated()
-
-        val box = Div().apply {
-            setClassName("bg-white p-4 rounded-lg shadow-lg transition-all duration-300")
-
-            addChild(Div().apply {
-                setClassName("text-2xl font-semibold transition-all duration-300")
-                setText("Hello World")
-            })
-
-            events.onMouseEnter {
-                this.setClassName("bg-blue-500")
-            }
-
-            events.onMouseLeave {
-                this.removeClassName("bg-blue-500")
-            }
+        // Create a simple Div component
+        val myDiv = Div().apply {
+            addText("Hello from Lumina!")
+            styles.backgroundColor = "lightblue"
+            styles.padding = "20px"
         }
 
-        set(Div().apply {
-            setClassName("w-vw h-screen bg-gray-100 flex items-center justify-center")
-            addChild(box)
-        })
+        // Add the Div to the root of the application
+        Lumina.push(myDiv)
     }
 }
 
 fun main() {
-    App().startApp()
+    Application.launch(MyApp::class.java)
 }
 ```
 
+**Explanation**
 
-## Usable Components
+*   **`class MyApp : Lumina()`:** Your main application class extends `Lumina`.
+*   **`start(primaryStage: Stage)`:** The main entry point, called by JavaFX.
+*   **`onWindowCreated()`:** A callback function that's executed after the WebView has finished loading the initial HTML template. This is where you'll build and add your UI components.
+*   **`Lumina.push(myDiv)`:** Adds the `myDiv` component to the root of the HTML document.
+*   **`Lumina.setTitle()`:** Sets the title of the application's window.
 
-Lumina provides a variety of UI components that can be used to build your application. Here are some of the key components:
+**Components**
 
-### Div
+**`Component` Class**
 
-The `Div` component represents a `<div>` HTML element.
+The base class for all UI elements.
+
+**Properties:**
+
+*   `tagName`: The HTML tag name (e.g., "div", "span", "img").
+*   `id`: A unique identifier for the component.
+*   `rendered`: Indicates whether the component has been rendered in the WebView.
+*   `styles`: An instance of `Styles` to manage the component's styles.
+*   `attributes`: An instance of `Attributes` to manage the component's HTML attributes.
+*   `events`: An instance of `Events` to handle events.
+*   `onReady`: A callback function that is executed after the component's corresponding DOM element is fully rendered and ready in the WebView.
+
+**Methods:**
+
+*   `addChild(child: Component)`: Adds a child component.
+*   `addChildAtBeginning(child: Component)`: Adds a child component to the beginning.
+*   `addText(text: String)`: Adds text content.
+*   `setText(text: String)`: Sets the text content (overwrites existing content).
+*   `setChild(child: Component)`: Replaces all children with a single child component.
+*   `setClassName(className: String)`: Sets the CSS class name(s).
+*   `addClassName(className: String)`: Adds a CSS class name.
+*   `removeClassName(className: String)`: Removes a CSS class name.
+*   `render(): String`: Returns the HTML representation of the component.
+*   `addEvent(event: String, action: (data: Component?) -> Unit)`: Attaches an event listener.
+*   `removeEvent(listener: Listener)`: Removes an event listener.
+*   `remove()`: Removes the component from the DOM.
+*   `getStyle(style: String)`: Gets the value of a style property.
+*   `getAttribute(attribute: String)`: Gets the value of an attribute.
+*   `setAttribute(s: String, value: String)`: Sets the value of an attribute.
+*   `onRendered(callback: () -> Unit)`: Sets a callback to be executed when the component is rendered.
+*   `removeAttribute(s: String)`: Removes an attribute.
+*   `clearChildren()`: Removes all child components.
+
+**UI Components**
+
+Lumina provides a set of pre-built UI components that you can use directly or extend to create your own custom components.
+
+*   **`Div`:** A basic container element (`<div>`).
+*   **`Link`:** A hyperlink (`<span>` with click event to open the link).
+*   `href`: The URL the link points to.
+*   **`Section`:** A section element (`<section>`).
+*   **`Form`:** A form element (`<form>`).
+    *   `action`: The URL to submit the form data to.
+    *   `method`: The HTTP method for form submission (e.g., "get", "post").
+    *   `enctype`: The encoding type for form data.
+    *   `target`: The target window or frame for the form submission response.
+    *   `autocomplete`: Enables or disables form autocompletion.
+    *   `novalidate`: Disables form validation.
+*   **`Input`:** An input field (`<input>`).
+    *   `type`: The input type (e.g., "text", "password", "email", "number").
+    *   `name`: The name of the input field.
+    *   `value`: The current value of the input field.
+    *   `placeholder`: Placeholder text displayed when the input is empty.
+    *   `readonly`: Makes the input field read-only.
+    *   `disabled`: Disables the input field.
+    *   `required`: Makes the input field required.
+    *   `maxLength`: The maximum number of characters allowed.
+    *   `minLength`: The minimum number of characters required.
+    *   `size`: The visible width of the input field.
+    *   `autocomplete`: Enables or disables input autocompletion.
+    *   `pattern`: A regular expression that the input value must match.
+*   **`Iframe`:** An inline frame (`<iframe>`).
+    *   `src`: The URL of the page to embed.
+    *   `width`: The width of the iframe.
+    *   `height`: The height of the iframe.
+    *   `frameBorder`: The border width of the iframe.
+    *   `allowFullScreen`: Allows the iframe to be displayed in fullscreen mode.
+    *   `loading`: Specifies how the iframe should be loaded ("eager" or "lazy").
+    *   `sandbox`: Enables sandboxing restrictions for the iframe content.
+    *   `referrerPolicy`: Controls how much referrer information is sent with requests from the iframe.
+    *   `iFrameName`: The name of the iframe.
+    *   `allow`: Specifies a feature policy for the iframe.
+*   **`Image`:** An image element (`<img>`).
+    *   `src`: The URL of the image.
+    *   `alt`: Alternative text for the image.
+    *   `width`: The width of the image.
+    *   `height`: The height of the image.
+    *   `srcset`: A set of image sources for different screen sizes or resolutions.
+    *   `sizes`: Specifies the image sizes for different layouts.
+    *   `loading`: Specifies how the image should be loaded ("eager" or "lazy").
+    *   `decoding`: Provides a hint to the browser on how to decode the image ("sync", "async", or "auto").
+    *   `isMap`: Indicates whether the image is part of a server-side image map.
+    *   `useMap`: Specifies the name of a client-side image map to use.
+*   **`Audio`:** An audio element (`<audio>`) - extends `Media`.
+*   **`Video`:** A video element (`<video>`) - extends `Media`.
+*   **`Media`:** Base class for `Audio` and `Video`.
+    *   `autoPlay`: Automatically starts playing the media.
+    *   `controls`: Shows the browser's default media controls.
+    *   `crossOrigin`: Sets the CORS (Cross-Origin Resource Sharing) policy.
+    *   `loop`: Loops the media playback.
+    *   `muted`: Mutes the media.
+    *   `preload`: Provides a hint to the browser about how much media data to preload.
+    *   `src`: The URL of the media file.
+    *   `poster`: The URL of an image to display before the video starts.
+    *   `width`: The width of the video.
+    *   `height`: The height of the video.
+    *   `playsInline`: Hints that the video should play inline (not fullscreen).
+*   **`Select`:** A dropdown list (`<select>`).
+*   **`Option`:** An option within a select list (`<option>`).
+*   **`Svg`:** An SVG element (`<svg>`).
+    *   `viewBox`: Defines the coordinate system and aspect ratio of the SVG.
+    *   `xmlns`: The XML namespace for SVG elements.
+    *   `fill`: The fill color of SVG shapes.
+    *   `stroke`: The stroke color of SVG shapes.
+    *   `strokeWidth`: The width of the stroke.
+    *   `preserveAspectRatio`: Controls how the SVG scales to fit its container.
+    *   `addPath()`: Adds a path element to the SVG.
+    *   `addCircle()`: Adds a circle element to the SVG.
+    *   `addRect()`: Adds a rectangle element to the SVG.
+    *   `addLine()`: Adds a line element to the SVG.
+*   **`Table`:** A table element (`<table>`).
+    *   `border`: The width of the table border.
+    *   `cellSpacing`: The space between cells.
+    *   `cellPadding`: The space between cell content and the cell border.
+    *   `width`: The width of the table.
+    *   `height`: The height of the table.
+    *   `align`: The horizontal alignment of the table.
+    *   `summary`: A description of the table's content (for accessibility).
+    *   `addRow()`: Adds a row to the table.
+    *   `addHeader()`: Adds a header section to the table.
+    *   `addBody()`: Adds a body section to the table.
+    *   `addFooter()`: Adds a footer section to the table.
+*   **`TableBody`:** The body of a table (`<tbody>`).
+    *   `addRow()`: Adds a row to the table body.
+*   **`TableDataCell`:** A data cell within a table row (`<td>`).
+*   **`TableFooter`:** The footer of a table (`<tfoot>`).
+    *   `addRow()`: Adds a row to the table footer.
+*   **`TableHead`:** The header of a table (`<thead>`).
+    *   `addRow()`: Adds a row to the table header.
+*   **`TableHeaderCell`:** A header cell within a table row (`<th>`).
+*   **`TableRow`:** A row within a table (`<tr>`).
+    *   `addHeaderCell()`: Adds a header cell to the row.
+    *   `addDataCell()`: Adds a data cell to the row.
+
+**Styling**
+
+**Inline Styles**
+
+You can set inline styles using the `styles` property of a component:
 
 ```kotlin
-val myDiv = Div().apply {
-    id = "my-div"
-    styles.backgroundColor = "lightblue"
-    setText("Hello, Lumina!")
-}
-Lumina.push(myDiv)
+myDiv.styles.backgroundColor = "red"
+myDiv.styles.fontSize = "16px"
+myDiv.styles.padding = "10px 20px"
 ```
-### Section
 
-The `Section` component represents a `<section>` HTML element.
+**CSS Classes**
+
+You can add or remove CSS classes using the `setClassName`, `addClassName`, and `removeClassName` methods:
 
 ```kotlin
-val mySection = Section().apply {
-    id = "my-section"
-    styles.padding = "20px"
-    addChild(Div().apply { setText("This is a section") })
-}
-Lumina.push(mySection)
+myDiv.setClassName("my-class") // Sets the class to "my-class"
+myDiv.addClassName("another-class") // Adds "another-class"
+myDiv.removeClassName("my-class") // Removes "my-class"
 ```
 
-### Form
+**`Styles` Class**
 
-The `Form` component represents a `<form>` HTML element with various attributes like `action`, `method`, `enctype`, `target`, `autocomplete`, and `novalidate`.
+The `Styles` class provides a comprehensive set of properties to control the appearance of components. You can access it through the `styles` property of a `Component`.
 
-```kotlin
-val myForm = Form().apply {
-    id = "my-form"
-    action = "/submit"
-    method = "post"
-    addChild(Div().apply { setText("Form Content") })
-}
-Lumina.push(myForm)
-```
-
-### Table
-
-The `Table` component represents a `<table>` HTML element. You can add rows, headers, body, and footer using `TableRow`, `TableHead`, `TableBody`, and `TableFooter` respectively.
-
-```kotlin
-val myTable = Table().apply {
-    id = "my-table"
-    width = "100%"
-    border = "1"
-    addRow(TableRow().apply {
-        addCell(TableCell().apply { setText("Row 1, Cell 1") })
-        addCell(TableCell().apply { setText("Row 1, Cell 2") })
-    })
-}
-Lumina.push(myTable)
-```
-
-### Select
-
-The `Select` component represents a `<select>` HTML element.
-
-```kotlin
-val mySelect = Select().apply {
-    id = "my-select"
-    // Add options here
-}
-Lumina.push(mySelect)
-```
-
-### Media (Video/Audio)
-
-The `Media` component is a base class for `<video>` and `<audio>` elements. It supports attributes like `autoplay`, `controls`, `loop`, `muted`, `src`, `poster`, `width`, and `height`.
-
-```kotlin
-val myVideo = Media("video").apply {
-    id = "my-video"
-    src = "path/to/video.mp4"
-    controls = true
-    width = 640
-    height = 480
-}
-Lumina.push(myVideo)
-```
-
-### Image
-
-The `Image` component represents an `<img>` HTML element. It supports attributes like `src`, `alt`, `width`, `height`, `srcset`, `sizes`, `loading`, and `decoding`.
-
-```kotlin
-val myImage = Image().apply {
-    id = "my-image"
-    src = "path/to/image.jpg"
-    alt = "An example image"
-    width = "300"
-    height = "200"
-}
-Lumina.push(myImage)
-```
-
-### Iframe
-
-The `Iframe` component represents an `<iframe>` HTML element. It supports attributes like `src`, `width`, `height`, `frameBorder`, `allowFullScreen`, `loading`, `sandbox`, `referrerPolicy`, and `allow`.
-
-```kotlin
-val myIframe = Iframe().apply {
-    id = "my-iframe"
-    src = "https://www.example.com"
-    width = "600"
-    height = "400"
-    allowFullScreen = true
-}
-Lumina.push(myIframe)
-```
-
-### Svg
-
-The `Svg` component represents an `<svg>` HTML element. It supports attributes like `viewBox`, `xmlns`, `fill`, `stroke`, `strokeWidth`, and `preserveAspectRatio`. You can add various shapes like paths, circles, rectangles, and lines.
-
-```kotlin
-val mySvg = Svg().apply {
-    id = "my-svg"
-    viewBox = "0 0 100 100"
-    addCircle("50", "50", "40", mapOf("fill" to "red"))
-}
-Lumina.push(mySvg)
-```
-
-## Styling Components
-
-You can style components using the `styles` property, which is an instance of the `Styles` class. This class provides access to all CSS properties.
+**Example:**
 
 ```kotlin
 myDiv.styles.apply {
-    backgroundColor = "blue"
-    color = "white"
-    padding = "10px"
-    fontSize = "16px"
+    width = "50%"
+    height = "200px"
+    border = "1px solid black"
+    display = "flex"
+    justifyContent = "center"
+    alignItems = "center"
 }
 ```
 
-## Event Handling
+**Note:**  A complete list of available style properties is provided in the code files `lumina.components.styles.*`. Each file represents a specific CSS property category (e.g., `AlignContent.kt`, `FontWeight.kt`, `Position.kt`, etc.). You can refer to these files for a detailed list of options.
 
-Lumina components support event handling through the `addEvent` method.
+**Event Handling**
+
+Use the `events` property of a component to attach event listeners:
 
 ```kotlin
-myDiv.addEvent("click") { component ->
-    println("Div clicked!")
-    component?.styles?.backgroundColor = "green"
+myButton.events.onClick { 
+    println("Button clicked!")
+}
+
+myInput.events.onInput { eventData ->
+    val inputValue = eventData?.getAttribute("value") ?: "" // Get input value
+    println("Input value changed: $inputValue")
 }
 ```
 
-## Tailwind CSS Integration
+**`Events` Class**
 
-To use Tailwind CSS, set `enableTailwindCss` to `true` when creating your `Lumina` instance:
+The `Events` class provides methods for handling a wide range of DOM events.
+
+**Example Events:**
+
+*   `onAfterprint`, `onBeforeprint`, `onBeforeunload`, `onError`, `onHashchange`, `onLoad`, `onMessage`, `onOffline`, `onOnline`, `onPagehide`, `onPageshow`, `onPopstate`, `onResize`, `onStorage`, `onUnload`
+*   `onBlur`, `onChange`, `onFocus`, `onInput`, `onInvalid`, `onReset`, `onSelect`, `onSearch`, `onSubmit`
+*   `onClick`, `onDblclick`, `onContextmenu`
+*   `onDrag`, `onDragend`, `onDragenter`, `onDragleave`, `onDragover`, `onDragstart`, `onDrop`
+*   `onMousedown`, `onMousemove`, `onMouseout`, `onMouseover`, `onMouseup`, `onMousewheel`
+*   `onScroll`
+*   `onShow`, `onToggle`
+*   `onWheel`
+*   `onKeydown`, `onKeypress`, `onKeyup`
+*   `onMouseEnter`, `onMouseLeave`
+*   `onAnimationStart`, `onAnimationEnd`, `onAnimationIteration`
+*   `onTransitionEnd`
+*   `onTouchStart`, `onTouchMove`, `onTouchEnd`, `onTouchCancel`
+*   `onPointerDown`, `onPointerMove`, `onPointerUp`, `onPointerCancel`, `onPointerEnter`, `onPointerLeave`, `onPointerOver`, `onPointerOut`
+*   `onGotPointerCapture`, `onLostPointerCapture`
+*   `onCopy`, `onCut`, `onPaste`
+*   `onAbort`, `onCanPlay`, `onCanPlayThrough`, `onDurationChange`, `onEmptied`, `onEncrypted`, `onEnded`
+*   `onLoadedData`, `onLoadedMetadata`, `onLoadStart`, `onPause`, `onPlay`, `onPlaying`, `onProgress`, `onRateChange`, `onSeeked`, `onSeeking`, `onStalled`, `onSuspend`, `onTimeUpdate`, `onVolumeChange`, `onWaiting`
+*   `onFocusIn`, `onFocusOut`, `onFullscreenChange`, `onFullscreenError`
+*   And more... (refer to `Events.kt` for the complete list)
+
+**Inter-Process Communication (IPC)**
+
+Lumina's IPC system allows your Kotlin code to communicate with JavaScript code running in the WebView and vice-versa.
+
+**Sending Messages from Kotlin to JavaScript**
 
 ```kotlin
-class MyApp : Lumina(enableTailwindCss = true) {
-    // ...
+Lumina.exec("alert('Hello from Kotlin!');") // Execute arbitrary JavaScript code
+```
+
+**Sending Messages from JavaScript to Kotlin**
+
+1. **JavaScript:** Use the `sendMessageToJava` function (provided by Lumina in `ipc.js`) to send messages:
+
+    ```javascript
+    function sendMessageToJava(message, event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            let eventData = {};
+            let attributes = event.target.attributes;
+            for (let i = 0; i < attributes.length; i++) {
+                eventData[attributes[i].name] = attributes[i].value;
+            }
+            eventData.target = { id: event.target.id }
+            window.ipc.receiveMessage(JSON.stringify({ id: message.split("::")[0], event: message.split("::")[1] }), eventData);
+        } else {
+            window.ipc.receiveMessage(message);
+        }
+    }
+    
+    
+    function waitForElementById(elementId) {
+      return new Promise((resolve) => {
+        const observer = new MutationObserver((mutationsList, observer) => {
+          for (let mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+              const element = document.getElementById(elementId);
+              if (element) {
+                observer.disconnect();
+                resolve(element);
+                window.ipc.onElementReady(elementId);
+                return;
+              }
+            }
+          }
+        });
+    
+        observer.observe(document, { childList: true, subtree: true });
+      });
+    }
+    
+    document.addEventListener('ipcReady', function (e) {
+        window.ipc.onDocumentReady();
+    }, false);
+    ```
+
+2. **Kotlin:** Add event listeners using `component.addEvent()` and handle messages in your event handler functions. The `WebViewIPC.listeners` list stores the registered listeners.
+
+    ```kotlin
+    myButton.addEvent("onclick") { component ->
+        // Handle the message received from JavaScript
+        println("Message from JavaScript: ${component?.id}") 
+    }
+    ```
+
+**Example: Button Click to Update Text**
+
+```kotlin
+// In your Lumina application:
+
+val myButton = Button("Click Me")
+val myText = Div("Initial Text")
+
+myButton.events.onClick {
+    myText.setText("Text updated from Kotlin!")
 }
+
+Lumina.push(myButton)
+Lumina.push(myText)
 ```
 
-This will include the Tailwind CSS script in your HTML template.
+**Utilities**
 
-## Building and Running
-```bash
-mvn javafx:run
+*   **`Date`:**
+    *   `getDaysInMonth(year: Int, month: Int)`: Returns a list of `Day` objects for a given month and year.
+*   **`Link`:**
+    *   `openLink(url: String)`: Opens a URL in the default web browser.
+*   **`ResourceUtils`:**
+    *   `getResourceAsString(name: String)`: Loads a resource file as a string.
+    *   `getResourcePath(name: String)`: Gets the path to a resource file.
+
+**Advanced Usage**
+
+*   **`ComponentParser`:** Parse HTML strings into Lumina `Component` objects.
+*   **`FormParser`:** Parse HTML forms into `Form` and `Input` components.
+*   **`IframeParser`:** Parse HTML iframes into `Iframe` components.
+*   **`ImageParser`:** Parse HTML images into `Image` components.
+*   **`SVGParser`:** Parse SVG strings into `Svg` components.
+*   **`TableParser`:** Parse HTML tables into `Table` components.
+
+**Example: Parsing HTML**
+
+```kotlin
+val htmlString = "<div id=\"myDiv\">Hello, <b>World!</b></div>"
+val myComponent = ComponentParser.parseHtmlToComponent(htmlString)
+
+// Access and modify the parsed component
+println(myComponent.id) // Output: myDiv
+println(myComponent.childs[0].toString()) // Output: Hello,
+println(myComponent.childs[1].tagName) // Output: b
 ```
 
-## Conclusion
+**Note:** The parsers are useful for dynamically generating UI from HTML strings obtained from external sources (e.g., web APIs, user input).
 
-Lumina provides a powerful and flexible way to build desktop applications using web technologies. Its component-based architecture, styling capabilities, event handling, and IPC mechanism make it a comprehensive framework for developing modern desktop applications. By leveraging the strengths of Kotlin and JavaFX, Lumina simplifies the development process and allows you to create rich and interactive user interfaces.
+**Conclusion**
+
+This documentation provides a comprehensive overview of the Lumina UI framework. By understanding the core concepts, components, styling, event handling, and IPC mechanisms, you can start building powerful and interactive desktop applications using the elegance and expressiveness of Kotlin combined with the familiarity of web technologies. Remember to refer to the inline documentation (comments in the source code) for more specific details on individual classes and methods.

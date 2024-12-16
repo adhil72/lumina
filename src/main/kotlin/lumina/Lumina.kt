@@ -34,6 +34,7 @@ open class Lumina( private val htmlTemplate: String = htmlTemplate(), private va
         lateinit var webView: WebView
         lateinit var scene: Scene
         lateinit var primaryStage: Stage
+        @Volatile
         var ipcReady = false
         val components = mutableListOf<Component>()
 
